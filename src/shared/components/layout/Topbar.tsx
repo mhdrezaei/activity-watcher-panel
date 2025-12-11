@@ -15,22 +15,21 @@ export function Topbar() {
       </div>
       {/* Left section icons */}
       <div className="flex items-center gap-3">
+        {/* User Icon */}
+        <button className="w-10 h-10 flex items-center justify-center rounded-full bg-muted hover:bg-gray-200 transition">
+          <User size={18} />
+        </button>
+        {/* Help */}
+        <button className="w-10 h-10 flex items-center justify-center rounded-full bg-muted hover:bg-gray-200 transition">
+          <HelpCircle size={18} />
+        </button>
+
         {/* Light / Dark Toggle */}
         <button
           onClick={() => setDark(!dark)}
           className="w-10 h-10 flex items-center justify-center rounded-full bg-muted hover:bg-gray-200 transition"
         >
           {dark ? <Moon size={18} /> : <Sun size={18} />}
-        </button>
-
-        {/* Help */}
-        <button className="w-10 h-10 flex items-center justify-center rounded-full bg-muted hover:bg-gray-200 transition">
-          <HelpCircle size={18} />
-        </button>
-
-        {/* User Icon */}
-        <button className="w-10 h-10 flex items-center justify-center rounded-full bg-muted hover:bg-gray-200 transition">
-          <User size={18} />
         </button>
       </div>
     </header>
