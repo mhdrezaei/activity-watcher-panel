@@ -10,7 +10,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       {/* Main content wrapper */}
       <div className="mt-4 flex gap-4">
         <Sidebar />
-        <main className="mt-6">{children}</main>
+        <main className="w-full">{children}</main>
       </div>
     </div>
   );
