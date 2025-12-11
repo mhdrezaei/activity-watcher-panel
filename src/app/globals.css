@@ -1,26 +1,143 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Tailwind v4 theme tokens */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* رنگ‌ها بر اساس متغیرهای پایین */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-ring: hsl(var(--ring));
+
+  /* رنگ‌های پیشنهادی برای چارت‌ها */
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  /* radius ها برای کارت‌های نرم و مدرن */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  /* فونت‌ها (اگر Geist رو ست کنی، این‌ها کار می‌کنن) */
+  --font-sans: var(--font-yekan), sans-serif;
+
+  --font-mono: var(
+    --font-geist-mono,
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    "Courier New",
+    monospace
+  );
 }
 
+/* 🎨 Light mode (مطابق طرحی که فرستادی) */
+:root {
+  /* پس‌زمینه خیلی روشن مایل به آبی */
+  --background: 222 40% 97%;
+  /* متن تیره ولی نرم */
+  --foreground: 222 47% 12%;
+
+  /* پس‌زمینه سکشن‌ها و نوارهای بالایی */
+  --muted: 220 40% 96%;
+  --muted-foreground: 220 12% 45%;
+
+  /* کارت‌های سفید با بوردر خیلی نرم */
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 12%;
+
+  --border: 220 30% 92%;
+  --input: 220 30% 92%;
+
+  /* بنفش اصلی (دکمه‌ها، تب‌های فعال، لوگو) */
+  --primary: 245 84% 66%;
+  --primary-foreground: 0 0% 100%;
+
+  /* رنگ‌های اکسنـت (آیکن‌ها، برچسب‌ها،…) */
+  --accent: 200 94% 68%;
+  --accent-foreground: 222 47% 12%;
+
+  /* رنگ خطا */
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  /* رنگ رینگ focus */
+  --ring: 245 84% 66%;
+
+  /* پالت پیشنهادی برای چارت‌ها (pie / radial / bar) */
+  --chart-1: 249 89% 72%; /* بنفش */
+  --chart-2: 200 94% 68%; /* آبی فیروزه‌ای */
+  --chart-3: 42 97% 70%; /* زرد/نارنجی */
+  --chart-4: 151 82% 70%; /* سبز */
+  --chart-5: 10 82% 72%; /* قرمز نرم */
+}
+
+/* 🌙 Dark mode (برای آینده، اگر سوییچ تم اضافه کردی) */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 224 55% 6%;
+    --foreground: 210 40% 98%;
+
+    --muted: 223 47% 13%;
+    --muted-foreground: 215 20% 65%;
+
+    --card: 224 55% 7%;
+    --card-foreground: 210 40% 98%;
+
+    --border: 223 47% 18%;
+    --input: 223 47% 18%;
+
+    --primary: 245 84% 66%;
+    --primary-foreground: 0 0% 100%;
+
+    --accent: 200 94% 68%;
+    --accent-foreground: 224 55% 6%;
+
+    --destructive: 0 63% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 245 84% 66%;
+
+    --chart-1: 249 89% 72%;
+    --chart-2: 200 94% 68%;
+    --chart-3: 42 97% 70%;
+    --chart-4: 151 82% 70%;
+    --chart-5: 10 82% 72%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Base styles */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+  }
 }
