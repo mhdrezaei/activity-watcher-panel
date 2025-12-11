@@ -74,7 +74,7 @@
   --input: 220 30% 92%;
 
   /* بنفش اصلی (دکمه‌ها، تب‌های فعال، لوگو) */
-  --primary: 245 84% 66%;
+  --primary: 242 90% 65%;
   --primary-foreground: 0 0% 100%;
 
   /* رنگ‌های اکسنـت (آیکن‌ها، برچسب‌ها،…) */
@@ -137,7 +137,6 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
     font-family: var(--font-sans);
   }
 }
