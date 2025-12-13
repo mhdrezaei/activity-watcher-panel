@@ -1,3 +1,4 @@
+import { GeneralStatusWorkCharts } from "../GeneralStatusWorkCharts";
 import { GeneralStatusCards } from "./GeneralStatusCards";
 
 export function GeneralStatus() {
@@ -8,7 +9,7 @@ export function GeneralStatus() {
 
       {/* دیگر بخش‌های وضعیت کلی بعداً اضافه می‌شود */}
       <div className="">
-        <p className="text-gray-600">اطلاعات وضعیت کلی اینجا قرار می‌گیرد...</p>
+        <GeneralStatusWorkCharts />
       </div>
     </div>
   );
