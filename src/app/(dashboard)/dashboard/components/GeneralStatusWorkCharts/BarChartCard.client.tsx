@@ -39,14 +39,14 @@ function getYAxisConfig<T extends Record<string, unknown>>(
   };
 }
 
-export default function BarChartCardClient() {
+export default function BarChartCardClient({ data }: { data: typeof barData }) {
   const keys = ["فعال", "عدم_فعالیت"];
-  const yAxis = getYAxisConfig(barData, ["فعال", "عدم_فعالیت"]);
+  const yAxis = getYAxisConfig(data, ["فعال", "عدم_فعالیت"]);
 
   return (
     <div className="bg-white rounded-2xl p-4 flex flex-col gap-4 w-full h-[380px]">
       <ResponsiveBar
-        data={barData}
+        data={data}
         theme={{
           grid: {
             line: {

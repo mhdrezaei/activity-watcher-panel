@@ -6,8 +6,15 @@ import { PieChartCard } from "./PieChartCard";
 import { BarChartCard } from "./BarChartCard";
 import { Button } from "@/shared/components/ui/button";
 import { Calendar, Download, RefreshCcw } from "lucide-react";
+import { useGeneralStatusData } from "@/shared/hooks/useGeneralStatusData";
+import { BarChartSkeleton } from "./components/skeletons/BarChartSkeleton";
+import { PieChartSkeleton } from "./components/skeletons/PieChartSkeleton";
+import BarChartCardClient from "./BarChartCard.client";
+import PieChartCardClient from "./PieChartCard.client";
 
 export function GeneralStatusWorkCharts() {
+  const { isLoading, barData, pieData } = useGeneralStatusData();
+
   const [range, setRange] = useState<ChartRange>("weekly");
 
   return (
@@ -55,8 +62,17 @@ export function GeneralStatusWorkCharts() {
           </div>
         </div>
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <BarChartCard />
-          <PieChartCard />
+          {isLoading ? (
+            <BarChartSkeleton />
+          ) : (
+            <BarChartCardClient data={barData} />
+          )}
+
+          {isLoading ? (
+            <PieChartSkeleton />
+          ) : (
+            <PieChartCardClient data={pieData} />
+          )}
         </div>
       </div>
     </div>
