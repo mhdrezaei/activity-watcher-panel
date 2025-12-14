@@ -4,14 +4,24 @@ import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { CalendarDays } from "lucide-react";
+
 import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/lib/utils/shadcn";
 
-interface PersianDatePickerProps {
-  value?: Date | null;
-  onChange?: (date: Date | null) => void;
+/* ---------- Types ---------- */
+
+export type DateRange = {
+  from: Date | null;
+  to: Date | null;
+};
+
+type PersianDatePickerProps = {
+  value?: DateRange;
+  onChange: (range: DateRange) => void;
   className?: string;
-}
+};
+
+/* ---------- Component ---------- */
 
 export function PersianDatePicker({
   value,
@@ -22,20 +32,33 @@ export function PersianDatePicker({
     <DatePicker
       calendar={persian}
       locale={persian_fa}
-      value={value}
-      onChange={(date) => onChange?.(date?.toDate() ?? null)}
+      range
+      value={value?.from && value?.to ? [value.from, value.to] : []}
+      onChange={(dates) => {
+        if (!Array.isArray(dates)) {
+          onChange({ from: null, to: null });
+          return;
+        }
+
+        const [from, to] = dates;
+
+        onChange({
+          from: from ? from.toDate() : null,
+          to: to ? to.toDate() : null,
+        });
+      }}
       calendarPosition="bottom-right"
-      render={(value, openCalendar) => (
+      render={(displayValue, openCalendar) => (
         <Button
           variant="outline"
           className={cn(
-            "flex items-center gap-2 text-muted-foreground",
+            "flex items-center gap-2 text-muted-foreground min-w-40",
             className
           )}
           onClick={openCalendar}
         >
           <CalendarDays className="w-4 h-4" />
-          {value || "انتخاب تاریخ"}
+          {displayValue || "انتخاب بازه تاریخ"}
         </Button>
       )}
     />

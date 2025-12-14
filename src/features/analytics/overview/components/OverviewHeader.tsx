@@ -2,7 +2,7 @@
 
 import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
 
-export function StatusHeader({
+export function OverviewHeader({
   value,
   onChange,
 }: {

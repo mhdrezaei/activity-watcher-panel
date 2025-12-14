@@ -33,7 +33,7 @@ const stats: StatItem[] = [
   },
 ];
 
-export function GeneralStatusCards() {
+export function OverviewCards() {
   return (
     <div className="w-full bg-[#F2F4FC] border border-[#DFE4FF] rounded-2xl p-5 flex items-center justify-between gap-6 overflow-x-auto">
       {stats.map((item, i) => (

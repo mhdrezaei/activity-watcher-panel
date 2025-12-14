@@ -1,8 +1,8 @@
 "use client";
 
 import { ResponsiveBar } from "@nivo/bar";
-import { barData } from "./chartData";
-import VerticalLabels from "./components/VerticalLabels";
+import { barData } from "../../../data/fakeOverviewData";
+import VerticalLabels from "./VerticalLabels";
 type NumericKeys<T> = {
   [K in keyof T]-?: Exclude<T[K], undefined> extends number ? K : never;
 }[keyof T];

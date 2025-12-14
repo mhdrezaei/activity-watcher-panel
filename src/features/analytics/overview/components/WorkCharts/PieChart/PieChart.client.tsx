@@ -1,7 +1,7 @@
 "use client";
 
 import { ResponsivePie } from "@nivo/pie";
-import { pieData } from "./chartData";
+import { pieData } from "../../../data/fakeOverviewData";
 
 export default function PieChartCardClient({ data }: { data: typeof pieData }) {
   return (

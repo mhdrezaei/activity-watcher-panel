@@ -1,18 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { ChartFilters, ChartRange } from "./ChartFilters";
-import { PieChartCard } from "./PieChartCard";
-import { BarChartCard } from "./BarChartCard";
+import { ChartFilters, ChartRange } from "../../hooks/useOverviewFilters";
+
 import { Button } from "@/shared/components/ui/button";
 import { Calendar, Download, RefreshCcw } from "lucide-react";
 import { useGeneralStatusData } from "@/shared/hooks/useGeneralStatusData";
-import { BarChartSkeleton } from "./components/skeletons/BarChartSkeleton";
-import { PieChartSkeleton } from "./components/skeletons/PieChartSkeleton";
-import BarChartCardClient from "./BarChartCard.client";
-import PieChartCardClient from "./PieChartCard.client";
+import { BarChartSkeleton } from "./skeletons/BarChartSkeleton";
+import { PieChartSkeleton } from "./skeletons/PieChartSkeleton";
+import BarChartCardClient from "./BarChart/BarChart.client";
+import PieChartCardClient from "./PieChart/PieChart.client";
 
-export function GeneralStatusWorkCharts() {
+export function WorkCharts() {
   const { isLoading, barData, pieData } = useGeneralStatusData();
 
   const [range, setRange] = useState<ChartRange>("weekly");

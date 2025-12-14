@@ -2,7 +2,7 @@
 
 import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
 import { Button } from "@/shared/components/ui/button";
-import { RotateCcw, CalendarDays } from "lucide-react";
+import { RotateCcw } from "lucide-react";
 import { PersianRangePicker } from "@/shared/components/ui/date-picker";
 import { useState } from "react";
 
@@ -18,7 +18,6 @@ interface ChartFiltersProps {
 export function ChartFilters({
   range,
   onRangeChange,
-  onDateChange,
   onRefresh,
 }: ChartFiltersProps) {
   const [rangeDate, setRangeDate] = useState<[Date, Date] | null>(null);
