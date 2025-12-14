@@ -40,7 +40,7 @@
   --radius-xl: 1.5rem;
 
   /* فونت‌ها (اگر Geist رو ست کنی، این‌ها کار می‌کنن) */
-  --font-sans: var(--font-yekan), sans-serif;
+  --font-sans: var(--font-iran-sans), sans-serif;
 
   --font-mono: var(
     --font-geist-mono,

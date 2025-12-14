@@ -2,35 +2,50 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
-export const yekanBakh = localFont({
+export const iranSans = localFont({
   src: [
     {
-      path: "../../public/fonts/yekanbakh/YekanBakh-Light.woff2",
+      path: "../../public/fonts/iransans/IRANSansXFaNum-UltraLightD4.woff",
+      weight: "200",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/iransans/IRANSansXFaNum-LightD4.woff",
       weight: "300",
       style: "normal",
     },
     {
-      path: "../../public/fonts/yekanbakh/YekanBakh-Regular.woff2",
+      path: "../../public/fonts/iransans/IRANSansXFaNum-RegularD4.woff",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../../public/fonts/yekanbakh/YekanBakh-SemiBold.woff2",
+      path: "../../public/fonts/iransans/IRANSansXFaNum-MediumD4.woff",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/iransans/IRANSansXFaNum-SemiBoldD4.woff",
       weight: "600",
       style: "normal",
     },
     {
-      path: "../../public/fonts/yekanbakh/YekanBakh-Bold.woff2",
+      path: "../../public/fonts/iransans/IRANSansXFaNum-BoldD4.woff",
       weight: "700",
       style: "normal",
     },
     {
-      path: "../../public/fonts/yekanbakh/YekanBakh-Black.woff2",
+      path: "../../public/fonts/iransans/IRANSansXFaNum-ExtraBoldD4.woff",
+      weight: "800",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/iransans/IRANSansXFaNum-BlackD4.woff",
       weight: "900",
       style: "normal",
     },
   ],
-  variable: "--font-yekan",
+  variable: "--font-iran-sans",
   display: "swap",
 });
 const geistSans = Geist({
@@ -54,7 +69,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl" className={`${yekanBakh.variable}`}>
+    <html lang="fa" dir="rtl" className={`${iranSans.variable}`}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
