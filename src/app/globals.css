@@ -135,8 +135,11 @@
   * {
     @apply border-border;
   }
-
+  html {
+    direction: rtl;
+  }
   body {
     font-family: var(--font-sans);
+    direction: start;
   }
 }

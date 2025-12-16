@@ -6,7 +6,8 @@ import { useUserSelection } from "../hooks/useUserSelection";
 export function UserDetailsContainer() {
   const { users, selectedUser, userDetails, selectUser, search, setSearch } =
     useUserSelection();
-
+  console.log(selectedUser, "uuuuuuuuu");
+  console.log(userDetails, "uuuuuuuuuxxxxx");
   return (
     <div className="flex gap-4 w-full">
       <UserList

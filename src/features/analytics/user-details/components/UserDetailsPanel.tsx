@@ -1,4 +1,7 @@
 import { User, UserDetails } from "../types";
+import CurrentStatus from "./CurrentUserStatus";
+import { TopAppsCard } from "./UserAppUsage/TopAppCard";
+import { UserWorkChart } from "./UserWorkChart";
 
 export function UserDetailsPanel({
   user,
@@ -16,24 +19,14 @@ export function UserDetailsPanel({
   }
 
   return (
-    <div className="flex-1 bg-white rounded-2xl border p-6 flex flex-col gap-4">
-      <h3 className="font-semibold">وضعیت فعلی</h3>
-
-      <div className="text-sm">
-        وضعیت حضور: <strong>{details.presence}</strong>
-      </div>
-
-      <div className="text-sm">
-        برنامه فعال: <strong>{details.currentApp}</strong>
-      </div>
-
-      <div className="text-sm">
-        زمان فعالیت:{" "}
-        <strong>{Math.floor(details.activeTimeMinutes / 60)} ساعت</strong>
-      </div>
-
-      <div className="text-sm">
-        زمان AFK: <strong>{details.afkTimeMinutes} دقیقه</strong>
+    <div className="w-full bg-white rounded-2xl border p-6">
+      <h2 className=" border-b border-gray-100 p-4 mb-4">جزئیات فعالیت</h2>
+      <div className="grid grid-cols-2  gap-4">
+        <CurrentStatus details={details} />
+        <TopAppsCard details={details} />
+        <div className="col-span-2">
+          <UserWorkChart details={details} />
+        </div>
       </div>
     </div>
   );
