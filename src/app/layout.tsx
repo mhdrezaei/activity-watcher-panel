@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
+import { Providers } from "./providers";
 export const iranSans = localFont({
   src: [
     {
@@ -60,7 +61,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa" dir="rtl" className={`${iranSans.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
