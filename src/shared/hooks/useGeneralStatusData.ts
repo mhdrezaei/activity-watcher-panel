@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
   barData,
   pieData,
-} from "@/app/(dashboard)/dashboard/components/GeneralStatusWorkCharts/chartData";
+} from "../../features/analytics/overview/data/fakeOverviewData";
 
 export function useGeneralStatusData() {
   const [isLoading, setIsLoading] = useState(true);
