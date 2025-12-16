@@ -1,7 +1,7 @@
 import { DeviceCountsResponse } from "../types";
-import { api } from "@/core/config/api"; // همون axios instance خودت
+import { apiClient } from "@/lib/axiosClient"; // همون axios instance خودت
 
 export async function getDeviceCounts(): Promise<DeviceCountsResponse> {
-  const res = await api.get<DeviceCountsResponse>("device/counts/");
+  const res = await apiClient.get<DeviceCountsResponse>("device/counts/");
   return res.data;
 }
