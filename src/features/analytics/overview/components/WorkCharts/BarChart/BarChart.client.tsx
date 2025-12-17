@@ -1,5 +1,5 @@
 "use client";
-
+import { forwardRef } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { barData } from "../../../data/fakeOverviewData";
 import VerticalLabels from "./VerticalLabels";
@@ -72,19 +72,21 @@ function getYAxisConfig<T extends Record<string, unknown>>(
   };
 }
 
-export default function BarChartCardClient({
-  data,
-  aggregation,
-}: {
-  data: typeof barData;
-  aggregation: "hourly" | "daily" | "weekly" | "monthly";
-}) {
+const BarChartCardClient = forwardRef<
+  HTMLDivElement,
+  {
+    data: typeof barData;
+    aggregation: "hourly" | "daily" | "weekly" | "monthly";
+  }
+>(function BarChart({ data, aggregation }, ref) {
   const keys = ["فعال", "عدم_فعالیت"];
-  console.log(data, "nnnnnnnnnnnn");
   const yAxis = getYAxisConfig(data, ["فعال", "عدم_فعالیت"], aggregation);
-  console.log(yAxis, "nnnnnnnnnnnn");
   return (
-    <div className="bg-white rounded-2xl p-4 flex flex-col gap-4 w-full h-[380px]">
+    <div
+      ref={ref}
+      id="bar-chart"
+      className="bg-white rounded-2xl p-4 flex flex-col gap-4 w-full h-[380px]"
+    >
       <ResponsiveBar
         data={data}
         theme={{
@@ -186,4 +188,5 @@ export default function BarChartCardClient({
       />
     </div>
   );
-}
+});
+export default BarChartCardClient;
