@@ -1,9 +1,9 @@
 "use client";
 
 import { ResponsivePie } from "@nivo/pie";
-import { pieData } from "../../../data/fakeOverviewData";
+import type { PieSlice } from "@/features/analytics/overview/types";
 
-export default function PieChartCardClient({ data }: { data: typeof pieData }) {
+export default function PieChartCardClient({ data }: { data: PieSlice[] }) {
   return (
     <div className="bg-white rounded-2xl p-4 flex flex-col gap-4 w-full h-[380px]">
       <ResponsivePie

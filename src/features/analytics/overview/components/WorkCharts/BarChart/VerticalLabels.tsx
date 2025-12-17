@@ -5,7 +5,7 @@ function splitMinutes(value: number) {
   const minutes = value % 60;
 
   return {
-    hoursText: `${hours} ساعت`,
+    hoursText: hours > 0 ? `${hours} ساعت` : null,
     minutesText: minutes > 0 ? `${minutes} دقیقه` : null,
   };
 }
@@ -18,17 +18,12 @@ const VerticalLabels: BarCustomLayer<{
   return (
     <>
       {bars.map((bar) => {
-        // اگر bar خیلی کوتاه است، label نشان نده
         if (bar.height < 40) return null;
 
-        const { hoursText, minutesText } = bar.data.value
-          ? splitMinutes(bar.data.value)
-          : {};
+        const { hoursText, minutesText } = splitMinutes(bar.data.value ?? 0);
 
         const centerX = bar.x + bar.width / 2;
         const centerY = bar.y + bar.height / 2;
-
-        const hasTwoLines = Boolean(minutesText);
 
         return (
           <g
@@ -43,18 +38,17 @@ const VerticalLabels: BarCustomLayer<{
                 fill: "#ffffff",
                 fontSize: 10,
                 fontWeight: 500,
-                pointerEvents: "none",
                 userSelect: "none",
               }}
             >
-              {/* خط اول: ساعت */}
-              <tspan x={0} dy={hasTwoLines ? "-0.6em" : "0"}>
-                {hoursText}
-              </tspan>
+              {hoursText && (
+                <tspan x={0} dy={minutesText ? "-0.6em" : "0"}>
+                  {hoursText}
+                </tspan>
+              )}
 
-              {/* خط دوم: دقیقه */}
-              {hasTwoLines && (
-                <tspan x={0} dy="1.2em">
+              {minutesText && (
+                <tspan x={0} dy={hoursText ? "1.2em" : "0"}>
                   {minutesText}
                 </tspan>
               )}
