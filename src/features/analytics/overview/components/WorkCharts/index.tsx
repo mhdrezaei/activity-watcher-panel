@@ -1,8 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import {
+  exportBarChartToExcel,
+  exportBarChartToPDF,
+} from "../../utils/exportBarChart";
+import { printBarChart } from "../../utils/printBarChart";
+
 import { Button } from "@/shared/components/ui/button";
-import { Calendar, Download, RefreshCcw } from "lucide-react";
+import { Calendar, Download, RefreshCcw, Printer } from "lucide-react";
 
 import { BarChartSkeleton } from "./skeletons/BarChartSkeleton";
 import { PieChartSkeleton } from "./skeletons/PieChartSkeleton";
@@ -50,6 +56,8 @@ function getInitialRange(): WorkRange {
 }
 
 export function WorkCharts() {
+  const barChartRef = useRef<HTMLDivElement | null>(null);
+  const [open, setOpen] = useState(false);
   const [range, setRange] = useState<WorkRange>(() => getInitialRange());
 
   useEffect(() => {
@@ -103,10 +111,54 @@ export function WorkCharts() {
             <Button size="icon" variant="outline">
               <Calendar size={12} />
             </Button>
-
-            <Button size="icon" variant="outline">
-              <Download size={12} />
+            <Button
+              size="icon"
+              variant="outline"
+              onClick={() => printBarChart("bar-chart", "میزان کارکرد کاربران")}
+            >
+              <Printer size={12} />
             </Button>
+            <div className="relative">
+              <Button
+                size="icon"
+                variant="outline"
+                onClick={() => setOpen((p) => !p)}
+              >
+                <Download size={12} />
+              </Button>
+
+              {open && (
+                <div className="absolute left-0 mt-2 w-32 bg-white border rounded-xl shadow-md z-50">
+                  <button
+                    className="w-full px-3 py-2 text-sm hover:bg-gray-100 text-right"
+                    onClick={() => {
+                      if (barChartRef.current) {
+                        exportBarChartToPDF(
+                          barChartRef.current,
+                          "میزان کارکرد کاربران"
+                        );
+                      }
+                      setOpen(false);
+                    }}
+                  >
+                    دانلود PDF
+                  </button>
+
+                  <button
+                    className="w-full px-3 py-2 text-sm hover:bg-gray-100 text-right"
+                    onClick={() => {
+                      exportBarChartToExcel(
+                        barData?.data ?? [],
+                        "میزان کارکرد کاربران"
+                      );
+                      setOpen(false);
+                    }}
+                  >
+                    دانلود Excel
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
@@ -115,6 +167,7 @@ export function WorkCharts() {
             <BarChartSkeleton />
           ) : (
             <BarChartCardClient
+              ref={barChartRef}
               data={barData?.data ?? []}
               aggregation={barData?.aggregation ?? "hourly"}
             />
