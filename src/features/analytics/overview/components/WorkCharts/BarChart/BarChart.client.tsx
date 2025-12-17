@@ -9,45 +9,86 @@ type NumericKeys<T> = {
 
 function getYAxisConfig<T extends Record<string, unknown>>(
   data: readonly T[],
-  keys: readonly NumericKeys<T>[]
-): { ticks: number[]; max: number } {
-  // بیشترین مقدار stacked (دقیقه)
+  keys: readonly NumericKeys<T>[],
+  aggregation: "hourly" | "daily" | "weekly" | "monthly"
+): {
+  ticks: number[];
+  max: number;
+  format: (v: number) => string;
+  unitLabel: string;
+} {
   const maxMinutes = Math.max(
+    0,
     ...data.map((item) =>
       keys.reduce((sum, key) => sum + (Number(item[key]) ?? 0), 0)
     )
   );
 
-  // تبدیل به ساعت
-  const maxHours = Math.ceil(maxMinutes / 60);
+  // helper: انتخاب step خوش‌عدد
+  const pickStep = (raw: number, candidates: number[]) => {
+    for (const c of candidates) if (c >= raw) return c;
+    return candidates[candidates.length - 1];
+  };
 
-  // تقسیم بر 5
-  const stepHours = Math.ceil(maxHours / 5);
+  // ---------------- HOURLY (minutes) ----------------
+  if (aggregation === "hourly") {
+    // حداقل 60 دقیقه برای ظاهر خوب حتی اگر همه صفر باشند
+    const baseMax = Math.max(maxMinutes, 60);
 
-  // حداکثر نهایی محور (ساعت)
-  const maxAxisHours = stepHours * 5;
+    // می‌خوایم 5 فاصله داشته باشیم => step تقریبی
+    const rawStep = Math.ceil(baseMax / 5);
 
-  // ساخت ticks (بر حسب دقیقه چون داده دقیقه است)
-  const ticks: number[] = [];
-  for (let i = 0; i <= maxAxisHours; i += stepHours) {
-    ticks.push(i * 60);
+    // step های خوش‌فرم (دقیقه)
+    const step = pickStep(rawStep, [5, 10, 15, 20, 30, 45, 60, 90, 120]);
+
+    const max = step * 5;
+    const ticks = Array.from({ length: 6 }, (_, i) => i * step);
+
+    return {
+      max,
+      ticks,
+      format: (v) => `${v}`, // دقیقه
+      unitLabel: "دقیقه",
+    };
   }
 
+  // ---------------- DAILY / WEEKLY / MONTHLY (hours) ----------------
+  // حداقل 5 ساعت برای ظاهر خوب حتی اگر همه صفر باشند
+  const baseHours = Math.max(Math.ceil(maxMinutes / 60), 5);
+
+  const rawStepHours = Math.ceil(baseHours / 5);
+
+  // step های خوش‌فرم (ساعت)
+  const stepHours = pickStep(rawStepHours, [1, 2, 3, 4, 6, 8, 12, 24]);
+
+  const max = stepHours * 5 * 60;
+  const ticks = Array.from({ length: 6 }, (_, i) => i * stepHours * 60);
+
   return {
+    max,
     ticks,
-    max: maxAxisHours * 60,
+    format: (v) => `${Math.round(v / 60)}`, // ساعت
+    unitLabel: "ساعت",
   };
 }
 
-export default function BarChartCardClient({ data }: { data: typeof barData }) {
+export default function BarChartCardClient({
+  data,
+  aggregation,
+}: {
+  data: typeof barData;
+  aggregation: "hourly" | "daily" | "weekly" | "monthly";
+}) {
   const keys = ["فعال", "عدم_فعالیت"];
-  const yAxis = getYAxisConfig(data, ["فعال", "عدم_فعالیت"]);
-
+  console.log(data, "nnnnnnnnnnnn");
+  const yAxis = getYAxisConfig(data, ["فعال", "عدم_فعالیت"], aggregation);
+  console.log(yAxis, "nnnnnnnnnnnn");
   return (
     <div className="bg-white rounded-2xl p-4 flex flex-col gap-4 w-full h-[380px]">
       <ResponsiveBar
         data={data}
         theme={{
+          text: { fontFamily: "var(--font-iran-sans)" },
           grid: {
             line: {
               stroke: "#bfc3d1", // رنگ شبیه تصویر
@@ -86,7 +127,7 @@ export default function BarChartCardClient({ data }: { data: typeof barData }) {
           const m = total % 60;
 
           return (
-            <div className="rounded-xl border bg-white px-3 py-2 shadow-md text-sm">
+            <div className="min-w-56 rounded-xl border bg-white px-3 py-2 shadow-md text-sm">
               <div className="flex items-center gap-2">
                 <span
                   className="inline-block h-2 w-2 rounded-full"
@@ -98,7 +139,8 @@ export default function BarChartCardClient({ data }: { data: typeof barData }) {
               </div>
 
               <div className="mt-1 font-medium">
-                {String(id)}: {h} ساعت{m ? ` ${m} دقیقه` : ""}
+                {String(id)}: {h ? `${h} ساعت` : ""}
+                {m ? ` ${m} دقیقه` : ""}
               </div>
             </div>
           );
@@ -116,7 +158,10 @@ export default function BarChartCardClient({ data }: { data: typeof barData }) {
           tickSize: 1,
           tickPadding: 20,
           tickValues: yAxis.ticks,
-          format: (v) => Math.round(Number(v) / 60),
+          format: yAxis.format,
+          legend: yAxis.unitLabel,
+          legendPosition: "middle",
+          legendOffset: -32,
         }}
         /* ---------- Legend ---------- */
         legends={[
