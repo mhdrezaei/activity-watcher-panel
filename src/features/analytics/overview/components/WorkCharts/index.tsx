@@ -1,73 +1,126 @@
 "use client";
 
-import { useState } from "react";
-import { ChartFilters, ChartRange } from "../../hooks/useOverviewFilters";
-
+import { useEffect, useState } from "react";
 import { Button } from "@/shared/components/ui/button";
 import { Calendar, Download, RefreshCcw } from "lucide-react";
-import { useGeneralStatusData } from "@/shared/hooks/useGeneralStatusData";
+
 import { BarChartSkeleton } from "./skeletons/BarChartSkeleton";
 import { PieChartSkeleton } from "./skeletons/PieChartSkeleton";
 import BarChartCardClient from "./BarChart/BarChart.client";
 import PieChartCardClient from "./PieChart/PieChart.client";
 
-export function WorkCharts() {
-  const { isLoading, barData, pieData } = useGeneralStatusData();
+import { useDeviceCounts } from "../../hooks/useDeviceCounts";
+import { mapDeviceCountsToPie } from "../../transformers/mapDeviceCountsToPie";
+import { useWorkAggregates } from "../../hooks/useWorkAggregates";
 
-  const [range, setRange] = useState<ChartRange>("weekly");
+import type { WorkRange } from "../../types";
+import { RangeSelect } from "./filter/RangeSelect";
+import { ChartFilters } from "../../hooks/useOverviewFilters";
+
+const RANGE_STORAGE_KEY = "analytics.workCharts.range";
+
+const WORK_RANGES = [
+  "current_day",
+  "current_month",
+  "last_3_7days",
+  "last_7_days",
+  "last_30_days",
+  "last_3_months",
+  "last_6_months",
+] as const;
+
+function isWorkRange(value: unknown): value is WorkRange {
+  return (
+    typeof value === "string" &&
+    (WORK_RANGES as readonly string[]).includes(value)
+  );
+}
+
+function getInitialRange(): WorkRange {
+  if (typeof window === "undefined") return "current_day";
+
+  try {
+    const saved = window.localStorage.getItem(RANGE_STORAGE_KEY);
+    if (isWorkRange(saved)) return saved;
+  } catch {
+    // ignore
+  }
+
+  return "current_day";
+}
+
+export function WorkCharts() {
+  const [range, setRange] = useState<WorkRange>(() => getInitialRange());
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(RANGE_STORAGE_KEY, range);
+    } catch {
+      // ignore
+    }
+  }, [range]);
+
+  const {
+    data: barData,
+    isLoading: isLoadingBar,
+    isFetching: isFetchingBar,
+    refetch: refetchBar,
+  } = useWorkAggregates(range);
+
+  const {
+    data: deviceCounts,
+    isLoading: isLoadingPie,
+    refetch: refetchPie,
+    isFetching: isFetchingPie,
+  } = useDeviceCounts();
+
+  const pieData = deviceCounts ? mapDeviceCountsToPie(deviceCounts) : [];
 
   return (
     <div className="space-y-4">
-      <ChartFilters
-        range={range}
-        onRangeChange={setRange}
-        onRefresh={() => {
-          // بعداً: refetch API
-          console.log("refresh charts");
-        }}
-        onDateChange={(date) => {
-          console.log("selected date", date);
-        }}
-      />
+      <div className="flex justify-start items-center gap-3">
+        <RangeSelect value={range} onChange={setRange} />
+        <ChartFilters range="daily" onRangeChange={() => {}} />
+      </div>
 
-      <div className="w-full p-2 bg-[#FAFBFE] rounded-b-xl flex flex-col justify-start items-start gap-2">
-        <div className="flex justify-between items-center w-[98%] mx-auto py-3  border-b border-slate-200 mb-2">
+      <div className="w-full p-2 bg-[#FAFBFE] rounded-b-xl">
+        <div className="flex justify-between items-center w-[98%] mx-auto py-3 border-b border-slate-200 mb-2">
           <h3 className="text-sm font-bold text-[#595959]">میزان کارکرد</h3>
-          {/* Icons (Refresh + Date Picker + Export) */}
+
           <div className="flex items-center gap-2">
             <Button
-              variant="outline"
-              className="flex w-6 h-6 bg-white p-3 border border-dashed border-gray-500 rounded-sm hover:cursor-pointer hover:scale-105 hover:bg-gray-100"
               size="icon"
+              variant="outline"
+              onClick={() => {
+                refetchBar();
+                refetchPie();
+              }}
+              disabled={isFetchingBar || isFetchingPie}
             >
               <RefreshCcw size={12} />
             </Button>
 
-            <Button
-              variant="outline"
-              className="flex w-6 h-6 bg-white p-3 border border-dashed border-gray-500 rounded-sm hover:cursor-pointer hover:scale-105 hover:bg-gray-100"
-              size="icon"
-            >
+            <Button size="icon" variant="outline">
               <Calendar size={12} />
             </Button>
 
-            <Button
-              variant="outline"
-              className="flex w-6 h-6 bg-white p-3 border border-dashed border-gray-500 rounded-sm hover:cursor-pointer hover:scale-105 hover:bg-gray-100"
-              size="icon"
-            >
+            <Button size="icon" variant="outline">
               <Download size={12} />
             </Button>
           </div>
         </div>
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {isLoading ? (
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {isLoadingBar ? (
             <BarChartSkeleton />
           ) : (
-            <BarChartCardClient data={barData} />
+            <BarChartCardClient
+              data={barData?.data ?? []}
+              aggregation={barData?.aggregation ?? "hourly"}
+            />
           )}
 
-          {isLoading ? (
+          {isLoadingPie ? (
             <PieChartSkeleton />
           ) : (
             <PieChartCardClient data={pieData} />

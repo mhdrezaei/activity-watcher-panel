@@ -34,7 +34,7 @@ export const authService = {
 
     if (!refreshToken) return null;
 
-    const res = await apiClient.post("/refresh/", {
+    const res = await apiClient.post("/login/token/refresh/", {
       refresh: refreshToken,
     });
 
