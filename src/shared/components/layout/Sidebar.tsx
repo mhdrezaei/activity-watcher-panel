@@ -89,6 +89,7 @@ export function Sidebar() {
 
         {/* -------- LOGOUT -------- */}
         <button
+          aria-label="خروج"
           onClick={() => setLogoutOpen(true)}
           className={clsx(
             "flex items-center gap-3 rounded-2xl px-3 py-3 hover:bg-gray-100 transition",
