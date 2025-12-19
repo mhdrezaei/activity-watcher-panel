@@ -1,3 +1,4 @@
+import { Footer } from "./Footer";
 import { Sidebar } from "./Sidebar";
 import { Topbar } from "./Topbar";
 
@@ -10,8 +11,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       {/* Main content wrapper */}
       <div className="mt-4 flex gap-4">
         <Sidebar />
-        <main className="w-full">{children}</main>
+        <main className="w-full flex-1 min-h-screen">{children}</main>
       </div>
+      <Footer />
     </div>
   );
 }
