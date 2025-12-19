@@ -32,7 +32,7 @@ export function ConfirmLogoutModal({ open, onCancel, onConfirm }: Props) {
             انصراف
           </Button>
           <Button variant="destructive" onClick={onConfirm}>
-            خروج
+            تائید
           </Button>
         </DialogFooter>
       </DialogContent>
