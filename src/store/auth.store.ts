@@ -15,9 +15,13 @@ export interface AuthState {
   refreshToken: string | null;
   user: AuthUser | null;
 
+  /** 👇 برای جلوگیری از flicker */
+  hydrated: boolean;
+
   /* actions */
   setAuth: (access: string, refresh: string, user?: AuthUser) => void;
   clearAuth: () => void;
+  setHydrated: () => void;
 }
 
 /* ------------------------------------------------------------------ */
@@ -30,6 +34,8 @@ export const useAuthStore = create<AuthState>()(
       accessToken: null,
       refreshToken: null,
       user: null,
+
+      hydrated: false,
 
       setAuth: (access, refresh, user) =>
         set({
@@ -44,14 +50,22 @@ export const useAuthStore = create<AuthState>()(
           refreshToken: null,
           user: null,
         }),
+
+      setHydrated: () => set({ hydrated: true }),
     }),
     {
       name: "auth-storage",
+
       partialize: (state) => ({
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,
         user: state.user,
       }),
+
+      /** 👇 مهم‌ترین بخش */
+      onRehydrateStorage: () => (state) => {
+        state?.setHydrated();
+      },
     }
   )
 );
