@@ -1,23 +1,35 @@
 "use client";
+
 import { UserDetailsPanel } from "../components/UserDetailsPanel";
 import { UserList } from "../components/UserList/UserList";
 import { useUserSelection } from "../hooks/useUserSelection";
 
 export function UserDetailsContainer() {
-  const { users, selectedUser, userDetails, selectUser, search, setSearch } =
-    useUserSelection();
-  console.log(selectedUser, "uuuuuuuuu");
-  console.log(userDetails, "uuuuuuuuuxxxxx");
+  const {
+    users,
+    isLoadingUsers,
+    selectedUserId,
+    selectUser,
+    search,
+    setSearch,
+  } = useUserSelection();
+
   return (
     <div className="flex gap-4 w-full">
       <UserList
         users={users}
-        selectedId={selectedUser?.id ?? null}
+        selectedId={selectedUserId}
         onSelect={selectUser}
         search={search}
         onSearch={setSearch}
+        isLoading={isLoadingUsers}
       />
-      <UserDetailsPanel user={selectedUser} details={userDetails} />
+
+      {!selectedUserId ? (
+        <div></div>
+      ) : (
+        <UserDetailsPanel userId={selectedUserId} />
+      )}
     </div>
   );
 }

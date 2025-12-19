@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/auth.store";
 import { DashboardShell } from "@/shared/components/layout/DashboardShell";
 import { useHydrated } from "@/shared/hooks/useHydrated";
+import { AuthGuard } from "@/shared/components/guards/AuthGuard";
 
 export default function DashboardLayout({
   children,
@@ -31,5 +32,9 @@ export default function DashboardLayout({
   // اگر hydrated شد ولی توکن نداشت → صفحه خالی تا redirect انجام شود
   if (!accessToken) return null;
 
-  return <DashboardShell>{children}</DashboardShell>;
+  return (
+    <AuthGuard>
+      <DashboardShell>{children}</DashboardShell>
+    </AuthGuard>
+  );
 }

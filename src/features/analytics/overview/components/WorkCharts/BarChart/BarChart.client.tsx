@@ -77,14 +77,15 @@ const BarChartCardClient = forwardRef<
   {
     data: typeof barData;
     aggregation: "hourly" | "daily" | "weekly" | "monthly";
+    id?: string;
   }
->(function BarChart({ data, aggregation }, ref) {
+>(function BarChart({ data, aggregation, id }, ref) {
   const keys = ["فعال", "عدم_فعالیت"];
   const yAxis = getYAxisConfig(data, ["فعال", "عدم_فعالیت"], aggregation);
   return (
     <div
       ref={ref}
-      id="bar-chart"
+      id={id || "bar-chart"}
       className="bg-white rounded-2xl p-4 flex flex-col gap-4 w-full h-[380px]"
     >
       <ResponsiveBar

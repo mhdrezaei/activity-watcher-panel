@@ -130,9 +130,12 @@ apiClient.interceptors.response.use(
         timeout: 15_000,
       });
 
-      const res = await refreshClient.post<RefreshResponse>("refresh/", {
-        refresh: refreshToken,
-      });
+      const res = await refreshClient.post<RefreshResponse>(
+        "/login/token/refresh/",
+        {
+          refresh: refreshToken,
+        }
+      );
 
       const newAccess = res.data.access;
       const newRefresh = res.data.refresh ?? refreshToken;
