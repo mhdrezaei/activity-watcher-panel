@@ -26,10 +26,10 @@ type SidebarItem = {
 
 const MENU_ITEMS: SidebarItem[] = [
   { href: "/dashboard", label: "پیشخوان", icon: DashboardIcon },
+  { href: "/users-management", label: "مدیریت کاربران", icon: UsersIcon },
   { href: "/analytics", label: "نمودارها", icon: AnalyticsIcon },
   { href: "/view", label: "گزارش گیری", icon: ChartIcon },
   { href: "/settings", label: "تنظیمات سیستم", icon: SettingsIcon },
-  { href: "/users", label: "مدیریت کاربران", icon: UsersIcon },
 ];
 
 export function Sidebar() {
