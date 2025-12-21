@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
 import { Providers } from "./providers";
-
+import { Toaster } from "sonner";
 export const iranSans = localFont({
   src: [
     {
@@ -64,6 +64,7 @@ export default function RootLayout({
     <html lang="fa" dir="rtl" className={`${iranSans.variable}`}>
       <body>
         <Providers>{children}</Providers>
+        <Toaster richColors position="top-center" />
       </body>
     </html>
   );
