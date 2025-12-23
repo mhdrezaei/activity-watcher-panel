@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { usersService } from "../api/users.service";
-import { User } from "@/features/analytics/user-details/types";
+import { toast } from "sonner";
 
 export function useToggleUserActive() {
   const queryClient = useQueryClient();
@@ -9,15 +9,17 @@ export function useToggleUserActive() {
     mutationFn: ({ id, active }: { id: string; active: boolean }) =>
       usersService.toggleActive(id, active),
 
-    // ✅ realtime update
-    onSuccess: (_, variables) => {
-      queryClient.setQueryData<User[]>(["users-management"], (old) => {
-        if (!old) return old;
+    onSuccess: () => {
+      toast.success("وضعیت کاربر با موفقیت بروزرسانی شد");
 
-        return old.map((u) =>
-          u.id === variables.id ? { ...u, active: variables.active } : u
-        );
+      // 👇 invalidate تمام صفحات / سرچ‌ها
+      queryClient.invalidateQueries({
+        queryKey: ["users-management"],
       });
+    },
+
+    onError: () => {
+      toast.error("خطا در بروزرسانی وضعیت کاربر");
     },
   });
 }

@@ -11,6 +11,13 @@ export interface UserApiResponse {
   updated: string;
 }
 
+export interface PaginatedResponse<T> {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
+}
+
 export type UpdateUserPayload = {
   id: string;
   name: string;
