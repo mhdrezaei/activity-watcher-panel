@@ -1,9 +1,18 @@
 import { apiClient } from "@/lib/axiosClient";
-import { User } from "../types";
+import type { PaginatedUsersResponse } from "./types";
+
+type GetUsersParams = {
+  limit: number;
+  offset: number;
+  search?: string;
+};
 
 export const usersService = {
-  getAll: async (): Promise<User[]> => {
-    const res = await apiClient.get("/device");
-    return res.data.results;
+  getAll: async (params: GetUsersParams): Promise<PaginatedUsersResponse> => {
+    const res = await apiClient.get("/device/", {
+      params,
+    });
+
+    return res.data;
   },
 };

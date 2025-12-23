@@ -12,6 +12,9 @@ export function UserDetailsContainer() {
     selectUser,
     search,
     setSearch,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
   } = useUserSelection();
 
   return (
@@ -23,13 +26,12 @@ export function UserDetailsContainer() {
         search={search}
         onSearch={setSearch}
         isLoading={isLoadingUsers}
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
       />
 
-      {!selectedUserId ? (
-        <div></div>
-      ) : (
-        <UserDetailsPanel userId={selectedUserId} />
-      )}
+      {!selectedUserId ? <div /> : <UserDetailsPanel userId={selectedUserId} />}
     </div>
   );
 }
