@@ -1,6 +1,5 @@
 "use client";
 
-import { Table } from "@tanstack/react-table";
 import { Button } from "@/shared/components/ui/button";
 import {
   Select,
@@ -10,7 +9,23 @@ import {
   SelectValue,
 } from "@/shared/components/ui/select/select";
 
-export function UsersTablePagination<T>({ table }: { table: Table<T> }) {
+type Props = {
+  page: number;
+  pageSize: number;
+  total: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (size: number) => void;
+};
+
+export function UsersTablePagination({
+  page,
+  pageSize,
+  total,
+  onPageChange,
+  onPageSizeChange,
+}: Props) {
+  const pageCount = Math.ceil(total / pageSize);
+
   return (
     <div className="flex items-center justify-between gap-4 py-3">
       {/* Page size */}
@@ -18,8 +33,8 @@ export function UsersTablePagination<T>({ table }: { table: Table<T> }) {
         <span className="text-sm text-muted-foreground">تعداد در هر صفحه</span>
 
         <Select
-          value={String(table.getState().pagination.pageSize)}
-          onValueChange={(v) => table.setPageSize(Number(v))}
+          value={String(pageSize)}
+          onValueChange={(v) => onPageSizeChange(Number(v))}
         >
           <SelectTrigger className="w-20">
             <SelectValue />
@@ -39,22 +54,21 @@ export function UsersTablePagination<T>({ table }: { table: Table<T> }) {
         <Button
           size="sm"
           variant="outline"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
+          onClick={() => onPageChange(page - 1)}
+          disabled={page === 0}
         >
           قبلی
         </Button>
 
         <span className="text-sm">
-          صفحه {table.getState().pagination.pageIndex + 1} از{" "}
-          {table.getPageCount()}
+          صفحه {page + 1} از {pageCount}
         </span>
 
         <Button
           size="sm"
           variant="outline"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
+          onClick={() => onPageChange(page + 1)}
+          disabled={page + 1 >= pageCount}
         >
           بعدی
         </Button>
