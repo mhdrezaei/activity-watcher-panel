@@ -6,3 +6,5 @@ export { UsersIcon } from "./UsersIcon";
 export { AnalyticsIcon } from "./AnalyticsIcon";
 export { MenuIcon } from "./MenuIcon";
 export { OnlineUsersIcon } from "./OnlineUsersIcon";
+export { ExelIcon } from "./ExelIcon";
+export { PdfIcon } from "./PdfIcon";
