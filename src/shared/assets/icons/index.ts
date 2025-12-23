@@ -1,5 +1,8 @@
+export { ActiveUsersIcon } from "./ActiveUsersIcon";
+export { AfkUsersIcon } from "./AfkUsersIcon";
 export { DashboardIcon } from "./DashboardIcon";
 export { SettingsIcon } from "./SettingIcon";
 export { UsersIcon } from "./UsersIcon";
 export { AnalyticsIcon } from "./AnalyticsIcon";
 export { MenuIcon } from "./MenuIcon";
+export { OnlineUsersIcon } from "./OnlineUsersIcon";

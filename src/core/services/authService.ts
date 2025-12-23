@@ -2,7 +2,9 @@ import { apiClient } from "@/lib/axiosClient";
 import { useAuthStore } from "@/store/auth.store";
 
 export const authService = {
-  // login با username/password
+  /* -------------------------------------------------- */
+  /* Login */
+  /* -------------------------------------------------- */
   login: async (username: string, password: string) => {
     const res = await apiClient.post("/login/token/", {
       username,
@@ -11,32 +13,36 @@ export const authService = {
 
     const { access, refresh, user } = res.data;
 
-    // ذخیره توکن‌ها و یوزر
-    const { setTokens, setUser } = useAuthStore.getState();
-    setTokens(access, refresh);
-    setUser(user);
+    // ✅ هماهنگ با store جدید
+    useAuthStore.getState().setAuth(access, refresh, user);
 
     return res.data;
   },
 
-  // خروج
+  /* -------------------------------------------------- */
+  /* Logout */
+  /* -------------------------------------------------- */
   logout: () => {
-    const { logout } = useAuthStore.getState();
-    logout();
+    useAuthStore.getState().clearAuth();
   },
 
-  // رفرش دستی (در صورت نیاز)
+  /* -------------------------------------------------- */
+  /* Manual refresh (اختیاری) */
+  /* -------------------------------------------------- */
   refresh: async () => {
-    const { refreshToken, setTokens } = useAuthStore.getState();
+    const { refreshToken, setAuth } = useAuthStore.getState();
 
     if (!refreshToken) return null;
 
-    const res = await apiClient.post("/refresh/", {
+    const res = await apiClient.post("/login/token/refresh/", {
       refresh: refreshToken,
     });
 
-    setTokens(res.data.access, refreshToken);
+    const newAccess = res.data.access as string;
 
-    return res.data.access;
+    // user را تغییر نمی‌دهیم
+    setAuth(newAccess, refreshToken);
+
+    return newAccess;
   },
 };
