@@ -26,7 +26,7 @@ export function UsersTable({
 
   return (
     <div className="space-y-4">
-      <div className="overflow-hidden rounded-2xl border bg-white">
+      <div className="overflow-hidden rounded-2xl border border-card bg-accent text-card-foreground">
         <table className="w-full border-collapse">
           <thead>
             {table.getHeaderGroups().map((hg) => (
@@ -38,7 +38,7 @@ export function UsersTable({
                       h.column.columnDef.header,
                       h.getContext()
                     )}`}
-                    className="p-3 text-right text-sm text-primary hover:bg-primary/10 border-b cursor-pointer"
+                    className="p-3 text-right text-sm text-primary hover:bg-primary/10 border-b border-border cursor-pointer"
                     onClick={h.column.getToggleSortingHandler()}
                   >
                     {flexRender(h.column.columnDef.header, h.getContext())}
@@ -50,9 +50,12 @@ export function UsersTable({
 
           <tbody>
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="border-b hover:bg-primary/10">
+              <tr
+                key={row.id}
+                className="border-b border-border last:border-none hover:bg-primary/10"
+              >
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="p-3 text-gray-700">
+                  <td key={cell.id} className="p-3 text-card-foreground">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

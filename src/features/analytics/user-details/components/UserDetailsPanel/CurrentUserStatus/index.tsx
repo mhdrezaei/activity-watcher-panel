@@ -19,10 +19,10 @@ export default function CurrentUserStatus({ data, isLoading }: Props) {
     : { items: [], footer: { title: "", time: "" } };
 
   return (
-    <Card className="bg-[#FAFAFA]">
+    <Card className="bg-accent text-muted-foreground">
       <CardHeader
         title="وضعیت فعلی"
-        actions={<Settings className="w-4 h-4 text-muted-foreground" />}
+        actions={<Settings className="w-4 h-4 text-card-foreground" />}
       />
       <CardContent>
         {isLoading ? (

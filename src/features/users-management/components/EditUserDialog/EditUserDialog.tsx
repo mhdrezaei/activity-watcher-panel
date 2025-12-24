@@ -20,7 +20,7 @@ export function EditUserDialog({ open, onOpenChange, user }: Props) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-right">ویرایش کاربر</DialogTitle>
+          <DialogTitle className="text-start">ویرایش کاربر</DialogTitle>
         </DialogHeader>
 
         <EditUserForm user={user} onClose={() => onOpenChange(false)} />

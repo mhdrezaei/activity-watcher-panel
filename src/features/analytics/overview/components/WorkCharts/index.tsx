@@ -91,12 +91,15 @@ export function WorkCharts() {
         <ChartFilters range="daily" onRangeChange={() => {}} />
       </div>
 
-      <div className="w-full p-2 bg-[#FAFBFE] rounded-b-xl">
-        <div className="flex justify-between items-center w-[98%] mx-auto py-3 border-b border-slate-200 mb-2">
-          <h3 className="text-sm font-bold text-[#595959]">میزان کارکرد</h3>
+      <div className="w-full p-2 bg-accent rounded-xl">
+        <div className="flex justify-between items-center w-[98%] mx-auto py-3 border-b border- mb-2">
+          <h3 className="text-sm font-bold text-card-foreground">
+            میزان کارکرد
+          </h3>
 
           <div className="flex items-center gap-2">
             <Button
+              className="cursor-pointer"
               size="icon"
               variant="outline"
               onClick={() => {
@@ -108,7 +111,7 @@ export function WorkCharts() {
               <RefreshCcw size={12} />
             </Button>
 
-            <Button size="icon" variant="outline">
+            <Button className="cursor-pointer" size="icon" variant="outline">
               <Calendar size={12} />
             </Button>
             <Button
@@ -120,6 +123,7 @@ export function WorkCharts() {
             </Button>
             <div className="relative">
               <Button
+                className="cursor-pointer"
                 size="icon"
                 variant="outline"
                 onClick={() => setOpen((p) => !p)}
@@ -128,9 +132,9 @@ export function WorkCharts() {
               </Button>
 
               {open && (
-                <div className="absolute left-0 mt-2 w-32 bg-white border rounded-xl shadow-md z-50">
+                <div className="absolute left-0 mt-2 w-32 bg-card text-accent-foreground border rounded-xl shadow-md z-50">
                   <button
-                    className="w-full px-3 py-2 text-sm hover:bg-gray-100 text-right"
+                    className="w-full px-3 py-2 rounded-xl text-center text-sm hover:bg-accent  cursor-pointer"
                     onClick={() => {
                       if (barChartRef.current) {
                         exportBarChartToPDF(
@@ -145,7 +149,7 @@ export function WorkCharts() {
                   </button>
 
                   <button
-                    className="w-full px-3 py-2 text-sm hover:bg-gray-100 text-right"
+                    className="w-full px-3 py-2 text-sm rounded-xl hover:bg-accent cursor-pointer text-center"
                     onClick={() => {
                       exportBarChartToExcel(
                         barData?.data ?? [],

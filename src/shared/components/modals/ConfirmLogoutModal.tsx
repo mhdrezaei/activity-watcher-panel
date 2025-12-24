@@ -18,9 +18,9 @@ type Props = {
 export function ConfirmLogoutModal({ open, onCancel, onConfirm }: Props) {
   return (
     <Dialog open={open} onOpenChange={onCancel}>
-      <DialogContent className="max-w-sm">
+      <DialogContent className="max-w-sm shadow-muted-foreground/20 shadow">
         <DialogHeader>
-          <DialogTitle>خروج از حساب کاربری</DialogTitle>
+          <DialogTitle className="text-start">خروج از حساب کاربری</DialogTitle>
         </DialogHeader>
 
         <p className="text-sm text-muted-foreground">

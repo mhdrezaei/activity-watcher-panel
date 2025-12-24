@@ -20,7 +20,7 @@ export function UserDetailsHeader({
   onDateChange,
 }: Props) {
   return (
-    <div className="flex items-center justify-between gap-4 bg-white rounded-2xl border p-4">
+    <div className="flex items-center justify-between gap-4 bg-card text-card-foreground rounded-2xl border border-card-foreground p-4">
       {/* Title */}
       <h3 className="font-semibold text-base">جزئیات فعالیت</h3>
 

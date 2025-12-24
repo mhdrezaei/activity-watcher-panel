@@ -9,7 +9,7 @@ type Props = {
 
 export function StatusList({ items, footer }: Props) {
   return (
-    <div className="space-y-6 text-sm">
+    <div className="space-y-6 text-sm text-accent-foreground">
       {items.map((item) => (
         <StatusListItem key={item.id} item={item} />
       ))}

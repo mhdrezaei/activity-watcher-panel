@@ -27,11 +27,11 @@ type Props = {
 export function RangeSelect({ value, onChange }: Props) {
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className="w-40">
+      <SelectTrigger className="w-40 border-muted-foreground [&_svg:not([class*='text-'])]:text-card-foreground">
         <SelectValue placeholder="بازه زمانی" />
       </SelectTrigger>
 
-      <SelectContent className="bg-white">
+      <SelectContent className="bg-accent">
         {RANGE_OPTIONS.map((opt) => (
           <SelectItem key={opt.value} value={opt.value}>
             {opt.label}

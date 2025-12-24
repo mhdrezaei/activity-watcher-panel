@@ -18,6 +18,7 @@ import {
   ExpandedMenuIcon,
 } from "@/shared/assets/icons";
 import { ChartIcon } from "@/shared/assets/icons/ChartIcon";
+import { useThemeStore } from "@/store/theme.store";
 type SidebarItem = {
   href: string;
   label: string;
@@ -33,6 +34,7 @@ const MENU_ITEMS: SidebarItem[] = [
 ];
 
 export function Sidebar() {
+  const { theme } = useThemeStore();
   const pathname = usePathname();
   const [expanded, setExpanded] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
@@ -41,7 +43,7 @@ export function Sidebar() {
   return (
     <aside
       className={clsx(
-        "sticky top-3 h-full rounded-2xl bg-white shadow-md transition-all duration-300",
+        "sticky top-3 h-full rounded-2xl bg-card shadow-md transition-all duration-300",
         expanded ? "w-64" : "w-20"
       )}
     >
@@ -51,9 +53,16 @@ export function Sidebar() {
           {/* Toggle Button */}
           <button
             onClick={() => setExpanded((v) => !v)}
-            className="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-gray-100 transition"
+            className="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-accent transition"
           >
-            {expanded ? <ExpandedMenuIcon /> : <MenuIcon active={expanded} />}
+            {expanded ? (
+              <ExpandedMenuIcon color={theme === "dark" ? "#FFF" : "#222"} />
+            ) : (
+              <MenuIcon
+                active={expanded}
+                color={theme === "dark" ? "#FFF" : "#222"}
+              />
+            )}
           </button>
 
           {/* Menu Items */}
@@ -66,14 +75,29 @@ export function Sidebar() {
                 key={item.href}
                 href={item.href}
                 className={clsx(
-                  "flex items-center gap-3 rounded-2xl px-3 py-3 transition-all",
-                  active
+                  "flex items-center gap-3 rounded-2xl px-2 py-2 transition-all",
+                  active && theme === "dark"
                     ? "bg-primary text-white"
-                    : "text-gray-700 hover:bg-gray-100"
+                    : !active && theme === "dark"
+                      ? "text-white hover:bg-accent"
+                      : active && theme === "light"
+                        ? "bg-primary text-white"
+                        : "hover:bg-accent"
                 )}
               >
                 <div className="w-8 h-8 flex items-center justify-center">
-                  <Icon active={active} color={active ? "#fff" : "#6b7280"} />
+                  <Icon
+                    active={active}
+                    color={
+                      active && theme === "dark"
+                        ? "#fff"
+                        : !active && theme === "dark"
+                          ? "#fff"
+                          : active && theme === "light"
+                            ? "#fff"
+                            : "#222"
+                    }
+                  />
                 </div>
 
                 {/* Label فقط وقتی expanded است */}
@@ -92,7 +116,7 @@ export function Sidebar() {
           aria-label="خروج"
           onClick={() => setLogoutOpen(true)}
           className={clsx(
-            "flex items-center gap-3 rounded-2xl px-3 py-3 hover:bg-gray-100 transition",
+            "flex items-center gap-3 rounded-2xl px-3 py-3 hover:bg-accent cursor-pointer transition",
             expanded ? "justify-start" : "justify-center"
           )}
         >

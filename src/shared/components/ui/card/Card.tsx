@@ -7,7 +7,7 @@ type CardProps = {
 
 export function Card({ children, className }: CardProps) {
   return (
-    <div className={cn("rounded-2xl border bg-white shadow-sm", className)}>
+    <div className={cn("rounded-2xl border bg-card shadow-sm", className)}>
       {children}
     </div>
   );

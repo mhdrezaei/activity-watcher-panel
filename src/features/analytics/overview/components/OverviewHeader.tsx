@@ -10,7 +10,7 @@ export function OverviewHeader({
   onChange: (val: string) => void;
 }) {
   return (
-    <div className="w-full bg-white rounded-2xl shadow p-4 border border-gray-100">
+    <div className="w-full bg-card rounded-2xl  p-4 border border-border">
       {/* Title */}
 
       {/* Tabs (only controlling, no content inside) */}

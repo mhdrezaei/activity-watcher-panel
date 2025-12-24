@@ -54,9 +54,9 @@ export function ActiveToggleCell({ id, active }: Props) {
 
       {/* Modal تأیید */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent>
+        <DialogContent className="shadow shadow-accent-foreground/20">
           <DialogHeader>
-            <DialogTitle className="text-right">
+            <DialogTitle className="text-start">
               {nextValue ? "فعال‌سازی کاربر" : "غیرفعال‌سازی کاربر"}
             </DialogTitle>
           </DialogHeader>
@@ -69,6 +69,7 @@ export function ActiveToggleCell({ id, active }: Props) {
           <DialogFooter className="gap-2">
             <Button
               variant="outline"
+              className="cursor-pointer"
               onClick={() => setOpen(false)}
               disabled={mutation.isPending}
             >
@@ -76,6 +77,7 @@ export function ActiveToggleCell({ id, active }: Props) {
             </Button>
 
             <Button
+              className="cursor-pointer"
               variant={nextValue ? "default" : "destructive"}
               onClick={handleConfirm}
             >

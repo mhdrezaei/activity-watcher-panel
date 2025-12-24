@@ -8,8 +8,8 @@ export function UserDetailsPanel({ userId }: { userId: string }) {
   }
 
   return (
-    <div className="w-full bg-white rounded-2xl border px-6 pb-6">
-      <h2 className=" border-b border-gray-100 p-3 mb-4">جزئیات فعالیت</h2>
+    <div className="w-full bg-card text-card-foreground rounded-2xl border px-6 pb-6">
+      <h2 className=" border-b border-border p-3 mb-4">جزئیات فعالیت</h2>
       <div className="grid grid-cols-2  gap-4">
         <CurrentStatusCard userId={userId} />
         <TopAppsCard userId={userId} />

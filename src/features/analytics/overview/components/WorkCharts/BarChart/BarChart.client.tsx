@@ -86,25 +86,44 @@ const BarChartCardClient = forwardRef<
     <div
       ref={ref}
       id={id || "bar-chart"}
-      className="bg-white rounded-2xl p-4 flex flex-col gap-4 w-full h-[380px]"
+      className="bg-card text-accent-foreground  rounded-2xl p-4 flex flex-col gap-4 w-full h-[380px]"
     >
       <ResponsiveBar
         data={data}
         theme={{
-          text: { fontFamily: "var(--font-iran-sans)" },
-          grid: {
-            line: {
-              stroke: "#bfc3d1", // رنگ شبیه تصویر
-              strokeWidth: 1,
-              strokeDasharray: "6 6", // 👈 خط‌چین افقی
-            },
+          text: {
+            fontFamily: "var(--font-iran-sans)",
+            fill: "hsl(var(--foreground))",
           },
+
           axis: {
+            ticks: {
+              text: {
+                fill: "hsl(var(--muted-foreground))",
+                fontSize: 12,
+              },
+              line: {
+                stroke: "hsl(var(--muted-foreground))",
+              },
+            },
             domain: {
               line: {
-                stroke: "#e5e7eb",
+                stroke: "hsl(var(--muted-foreground))",
                 strokeWidth: 1,
               },
+            },
+            legend: {
+              text: {
+                fill: "hsl(var(--muted-foreground))",
+              },
+            },
+          },
+
+          grid: {
+            line: {
+              stroke: "hsl(var(--muted-foreground))",
+              strokeWidth: 1,
+              strokeDasharray: "6 6",
             },
           },
         }}
@@ -130,7 +149,7 @@ const BarChartCardClient = forwardRef<
           const m = total % 60;
 
           return (
-            <div className="min-w-56 rounded-xl border bg-white px-3 py-2 shadow-md text-sm">
+            <div className="min-w-56 rounded-xl border bg-accent px-3 py-2 shadow-md text-sm">
               <div className="flex items-center gap-2">
                 <span
                   className="inline-block h-2 w-2 rounded-full"

@@ -52,11 +52,12 @@ export function UserList({
   }, [hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   return (
-    <div className="min-w-96 bg-white rounded-2xl border p-3 flex flex-col gap-3 max-h-[650px]">
-      <h3 className="font-semibold">لیست کاربران</h3>
+    <div className="min-w-96 bg-card text-card-foreground rounded-2xl border p-3 flex flex-col gap-3 max-h-[650px]">
+      <h3 className="font-semibold px-2">لیست کاربران</h3>
 
       <Input
         placeholder="جستجو کاربر..."
+        className="border-border p-2"
         value={search}
         onChange={(e) => onSearch(e.target.value)}
       />
@@ -64,7 +65,7 @@ export function UserList({
       {/* 👇 ارتفاع ثابت + اسکرول داخلی */}
       <div
         ref={containerRef}
-        className="flex flex-col gap-2 overflow-y-auto max-h-[650px]"
+        className="flex flex-col gap-2 overflow-y-auto custom-scrollbar max-h-[650px] pl-2"
       >
         {isLoading && users.length === 0 ? (
           <UserListSkeleton />

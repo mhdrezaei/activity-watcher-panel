@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
-/* Tailwind v4 theme tokens */
+/* ======================================================
+   Tailwind v4 Theme Tokens
+====================================================== */
 @theme inline {
-  /* رنگ‌ها بر اساس متغیرهای پایین */
+  /* Base */
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
 
@@ -15,6 +17,7 @@
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
 
+  /* Primary */
   --color-primary: hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));
 
@@ -26,120 +29,188 @@
 
   --color-ring: hsl(var(--ring));
 
-  /* رنگ‌های پیشنهادی برای چارت‌ها */
+  /* Charts */
   --color-chart-1: hsl(var(--chart-1));
   --color-chart-2: hsl(var(--chart-2));
   --color-chart-3: hsl(var(--chart-3));
   --color-chart-4: hsl(var(--chart-4));
   --color-chart-5: hsl(var(--chart-5));
 
-  /* radius ها برای کارت‌های نرم و مدرن */
+  /* Radius */
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
 
-  /* فونت‌ها (اگر Geist رو ست کنی، این‌ها کار می‌کنن) */
+  /* Fonts */
   --font-sans: var(--font-iran-sans), sans-serif;
-
-  --font-mono: var(
-    --font-geist-mono,
-    ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    Monaco,
-    Consolas,
-    "Liberation Mono",
-    "Courier New",
-    monospace
-  );
 }
 
-/* 🎨 Light mode (مطابق طرحی که فرستادی) */
+/* ======================================================
+   Watcher – Primary Palette
+====================================================== */
 :root {
-  /* پس‌زمینه خیلی روشن مایل به آبی */
+  --watcher-primary-50: hsl(210 100% 96%);
+  --watcher-primary-100: hsl(210 100% 90%);
+  --watcher-primary-200: hsl(210 100% 80%);
+  --watcher-primary-300: hsl(210 100% 70%);
+  --watcher-primary-400: hsl(210 100% 60%);
+  --watcher-primary-500: hsl(231 100% 45%);
+  --watcher-primary-600: hsl(210 100% 42%);
+  --watcher-primary-700: hsl(210 100% 38%);
+  --watcher-primary-800: hsl(210 100% 30%);
+  --watcher-primary-900: hsl(210 100% 23%);
+
+  --watcher-primary-main: hsl(210 100% 60%);
+  --watcher-primary-light: hsl(210 100% 70%);
+  --watcher-primary-dark: hsl(210 100% 38%);
+  --watcher-primary-contrastText: rgba(0, 0, 0, 0.87);
+}
+
+/* ======================================================
+   🌞 Light Theme (Default)
+====================================================== */
+:root {
   --background: 222 40% 97%;
-  /* متن تیره ولی نرم */
   --foreground: 222 47% 12%;
 
-  /* پس‌زمینه سکشن‌ها و نوارهای بالایی */
-  --muted: 220 40% 96%;
+  --muted: 220 60% 96%;
   --muted-foreground: 220 12% 45%;
 
-  /* کارت‌های سفید با بوردر خیلی نرم */
   --card: 0 0% 100%;
   --card-foreground: 222 47% 12%;
 
-  --border: 220 30% 92%;
+  --border: 222, 12%, 85%, 1;
   --input: 220 30% 92%;
 
-  /* بنفش اصلی (دکمه‌ها، تب‌های فعال، لوگو) */
   --primary: 242 90% 65%;
   --primary-foreground: 0 0% 100%;
 
-  /* رنگ‌های اکسنـت (آیکن‌ها، برچسب‌ها،…) */
-  --accent: 200 94% 68%;
+  --accent: 228, 63%, 97%, 1;
   --accent-foreground: 222 47% 12%;
 
-  /* رنگ خطا */
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 
-  /* رنگ رینگ focus */
-  --ring: 245 84% 66%;
+  --ring: 242 90% 65%;
 
-  /* پالت پیشنهادی برای چارت‌ها (pie / radial / bar) */
-  --chart-1: 249 89% 72%; /* بنفش */
-  --chart-2: 200 94% 68%; /* آبی فیروزه‌ای */
-  --chart-3: 42 97% 70%; /* زرد/نارنجی */
-  --chart-4: 151 82% 70%; /* سبز */
-  --chart-5: 10 82% 72%; /* قرمز نرم */
+  --chart-1: 249 89% 72%;
+  --chart-2: 210 100% 60%;
+  --chart-3: 42 97% 70%;
+  --chart-4: 151 82% 70%;
+  --chart-5: 10 82% 72%;
 }
 
-/* 🌙 Dark mode (برای آینده، اگر سوییچ تم اضافه کردی) */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: 224 55% 6%;
-    --foreground: 210 40% 98%;
+/* ======================================================
+   🌙 Dark Theme – Watcher
+====================================================== */
+html.dark {
+  --background: 210 14% 7%;
+  --foreground: 240 40% 96%;
 
-    --muted: 223 47% 13%;
-    --muted-foreground: 215 20% 65%;
+  --muted: 210 14% 13%;
+  --muted-foreground: 210 10% 60%;
 
-    --card: 224 55% 7%;
-    --card-foreground: 210 40% 98%;
+  --card: 231, 55%, 20%, 1;
+  --card-foreground: 0, 0%, 100%, 0.59;
 
-    --border: 223 47% 18%;
-    --input: 223 47% 18%;
+  --border: 232, 89%, 55%, 0.22;
+  --input: 210 14% 18%;
 
-    --primary: 245 84% 66%;
-    --primary-foreground: 0 0% 100%;
+  --primary: 232, 89%, 55%, 1;
+  --primary-foreground: 0 0% 100%;
 
-    --accent: 200 94% 68%;
-    --accent-foreground: 224 55% 6%;
+  --accent: 229, 22%, 10%, 1;
+  --accent-foreground: 210 40% 96%;
 
-    --destructive: 0 63% 60%;
-    --destructive-foreground: 210 40% 98%;
+  --destructive: 0 63% 60%;
+  --destructive-foreground: 210 40% 98%;
 
-    --ring: 245 84% 66%;
+  --ring: 210 100% 60%;
 
-    --chart-1: 249 89% 72%;
-    --chart-2: 200 94% 68%;
-    --chart-3: 42 97% 70%;
-    --chart-4: 151 82% 70%;
-    --chart-5: 10 82% 72%;
-  }
+  --chart-1: 210 100% 60%;
+  --chart-2: 210 100% 45%;
+  --chart-3: 42 97% 70%;
+  --chart-4: 151 82% 65%;
+  --chart-5: 10 82% 65%;
+
+  /* Watcher Dark Tokens */
+  --watcher-dark-900: hsl(210 14% 7%);
+  --watcher-dark-800: hsl(210 14% 9%);
+  --watcher-dark-700: hsl(210 14% 13%);
+
+  --watcher-dark-overlay: hsla(210, 14%, 7%, 0.7);
+  --watcher-dark-accent: hsla(240, 11%, 7%, 1);
+
+  /* Dark Gradient Background */
+  --watcher-dark-gradient: linear-gradient(
+    180deg,
+    var(--watcher-dark-accent) 0%,
+    var(--watcher-dark-overlay) 100%
+  );
 }
 
-/* Base styles */
+/* ======================================================
+   Base Styles
+====================================================== */
 @layer base {
   * {
     @apply border-border;
   }
+
   html {
     direction: rtl;
   }
+
   body {
     font-family: var(--font-sans);
     direction: start;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
   }
+
+  html.dark body {
+    background-image: var(--watcher-dark-gradient);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    border-color: var(--watcher-dark-700);
+  }
+}
+/* ================================
+   Custom Scrollbar (Light & Dark)
+================================ */
+
+.custom-scrollbar {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: hsl(var(--primary)) transparent;
+}
+
+/* Webkit (Chrome, Edge, Safari) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--primary));
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.2s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--primary) / 0.8);
+}
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: hsla(210, 100%, 60%, 0.6);
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: hsla(210, 100%, 60%, 0.85);
 }
