@@ -36,7 +36,7 @@ export function UsersTablePagination({
           value={String(pageSize)}
           onValueChange={(v) => onPageSizeChange(Number(v))}
         >
-          <SelectTrigger className="w-20">
+          <SelectTrigger className="w-20 border-accent-foreground [&_svg:not([class*='text-'])]:text-accent-foreground">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

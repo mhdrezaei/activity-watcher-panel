@@ -30,7 +30,7 @@ export function ChartFilters({
           variant="outline"
           size="icon"
           onClick={onRefresh}
-          className="rounded-full bg-white"
+          className="rounded-full bg-accent text-primary"
         >
           <RotateCcw className="w-4 h-4" />
         </Button>
@@ -47,21 +47,21 @@ export function ChartFilters({
         <TabsList className="bg-muted p-1 rounded-full">
           <TabsTrigger
             value="daily"
-            className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow"
+            className="rounded-full data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow"
           >
             روزانه
           </TabsTrigger>
 
           <TabsTrigger
             value="weekly"
-            className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow"
+            className="rounded-full data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow"
           >
             هفتگی
           </TabsTrigger>
 
           <TabsTrigger
             value="monthly"
-            className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow"
+            className="rounded-full data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow"
           >
             ماهانه
           </TabsTrigger>

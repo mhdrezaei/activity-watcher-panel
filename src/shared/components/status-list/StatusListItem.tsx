@@ -1,7 +1,9 @@
 import { cn } from "@/lib/utils/shadcn";
 import { StatusItem } from "./types";
+import { useThemeStore } from "@/store/theme.store";
 
 export function StatusListItem({ item }: { item: StatusItem }) {
+  const { theme } = useThemeStore();
   const { icon: Icon } = item;
 
   return (
@@ -20,9 +22,12 @@ export function StatusListItem({ item }: { item: StatusItem }) {
       </div>
 
       {/* Right */}
-      <div className="flex rtl:flex-row-reverse items-center gap-2 text-muted-foreground">
-        <span className="text-black text-sm">{item.description}</span>
-        <Icon color="#262626" className="w-5 h-5" />
+      <div className="flex rtl:flex-row-reverse items-center gap-3 text-muted-foreground">
+        <span className=" text-sm">{item.description}</span>
+        <Icon
+          color={theme === "light" ? "#262626" : "#aaa"}
+          className="w-5 h-5"
+        />
       </div>
     </div>
   );

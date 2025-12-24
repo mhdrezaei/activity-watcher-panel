@@ -34,7 +34,7 @@ export function UserWorkChart({ userId }: { userId: string }) {
   const barData = mapAggregatesToBar(data);
 
   return (
-    <Card className="bg-[#f3f6ff]">
+    <Card className="bg-accent text-card-foreground">
       <CardHeader
         title="میزان کارکرد"
         actions={

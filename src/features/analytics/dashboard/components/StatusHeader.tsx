@@ -5,7 +5,7 @@ import { AnalyticsTab, StatusHeaderProps } from "../types";
 
 export function StatusHeader({ value, onChange }: StatusHeaderProps) {
   return (
-    <div className="w-full bg-white rounded-2xl shadow p-4 border border-gray-100">
+    <div className="w-full bg-card text-card-foreground rounded-2xl shadow p-4 border border-border">
       {/* Title */}
 
       {/* Tabs (only controlling, no content inside) */}
@@ -18,14 +18,14 @@ export function StatusHeader({ value, onChange }: StatusHeaderProps) {
         <TabsList className="bg-muted p-1 rounded-xl flex gap-2">
           <TabsTrigger
             value="general"
-            className="data-[state=active]:bg-white data- data-[state=active]:shadow-sm rounded-xl"
+            className="text-card-foreground data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-xl"
           >
             وضعیت کلی
           </TabsTrigger>
 
           <TabsTrigger
             value="users"
-            className="data-[state=active]:bg-white data- data-[state=active]:shadow-sm rounded-xl"
+            className="text-card-foreground data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-xl"
           >
             به تفکیک کاربران
           </TabsTrigger>

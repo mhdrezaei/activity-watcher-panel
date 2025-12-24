@@ -153,7 +153,7 @@ export function LoginForm() {
               <Input
                 {...register("username")}
                 placeholder="ایمیل یا نام کاربری"
-                className={`h-10 pr-10 placeholder:text-right ${
+                className={`h-10 pr-10 placeholder:text-start ${
                   formState.errors.username ? "border-red-500" : ""
                 }`}
                 disabled={loading}

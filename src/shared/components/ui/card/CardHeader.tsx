@@ -10,14 +10,14 @@ export function CardHeader({ title, actions, className }: CardHeaderProps) {
   return (
     <div
       className={cn(
-        "flex items-center justify-between px-4 py-3 border-b",
+        "flex items-center justify-between px-4 py-3 border-b border-card",
         className
       )}
     >
-      <h3 className="font-semibold text-sm text-gray-700">{title}</h3>
+      <h3 className="font-semibold text-sm text-card-foreground">{title}</h3>
 
       {actions && (
-        <div className="flex bg-white p-1 rounded-md items-center gap-2">
+        <div className="flex bg-card p-1 rounded-md items-center gap-2">
           {actions}
         </div>
       )}

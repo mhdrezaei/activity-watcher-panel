@@ -18,11 +18,11 @@ export function UsersManagementContainer() {
 
   return (
     <div className="space-y-4">
-      <div className="w-full bg-white rounded-2xl shadow p-4 border border-gray-100">
+      <div className="w-full bg-card text-card-foreground rounded-2xl shadow p-4 border border-border">
         مدیریت کاربران
       </div>
 
-      <div className="w-full space-y-4 bg-white rounded-2xl shadow p-4 border border-gray-100">
+      <div className="w-full space-y-4 bg-card text-card-foreground rounded-2xl shadow p-4 border border-border">
         <Input
           placeholder="جستجو کاربر..."
           value={search}
@@ -30,7 +30,7 @@ export function UsersManagementContainer() {
             setPage(0); // reset page on search
             setSearch(e.target.value);
           }}
-          className="max-w-sm"
+          className="max-w-sm text-card-foreground bg-card border-card-foreground p-2"
         />
 
         {isLoading ? (

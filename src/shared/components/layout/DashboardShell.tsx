@@ -4,7 +4,7 @@ import { Topbar } from "./Topbar";
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-background p-4">
+    <div className="min-h-screen p-4">
       {/* Top Navigation */}
       <Topbar />
 

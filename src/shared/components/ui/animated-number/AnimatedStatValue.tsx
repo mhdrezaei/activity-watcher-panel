@@ -19,7 +19,7 @@ export function AnimatedStatValue({ value, suffix = "", isLoading }: Props) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="flex items-center gap-1 text-black"
+            className="flex items-center gap-1 text-primary"
           >
             <Loader2 className="w-4 h-4 animate-spin" />
           </motion.div>
@@ -29,7 +29,7 @@ export function AnimatedStatValue({ value, suffix = "", isLoading }: Props) {
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}
-            className="text-black text-sm font-bold"
+            className="text-primary text-sm font-bold"
           >
             {value}
             {suffix}

@@ -8,10 +8,10 @@ export function TopAppsCard({ userId }: { userId: string }) {
   const { data, isLoading, isError } = useUserTopApps(userId);
 
   return (
-    <Card className="bg-[#f3f6ff]">
+    <Card className="bg-accent text-muted-foreground">
       <CardHeader
         title="پر استفاده‌ترین برنامه‌ها"
-        actions={<Settings className="w-4 h-4 text-muted-foreground" />}
+        actions={<Settings className="w-4 h-4 text-card-foreground" />}
       />
 
       {isLoading ? (

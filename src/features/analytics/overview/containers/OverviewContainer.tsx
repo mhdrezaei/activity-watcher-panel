@@ -27,7 +27,7 @@ export function OverviewContainer() {
       }));
 
   return (
-    <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm space-y-6">
+    <div className="bg-card rounded-2xl p-6 border border-border shadow-sm space-y-6">
       <OverviewCards stats={stats} isLoading={isLoading} />
       <WorkCharts />
     </div>
