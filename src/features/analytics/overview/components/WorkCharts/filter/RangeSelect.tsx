@@ -6,7 +6,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shared/components/ui/select/select";
+} from "@/shared/components/ui/select/Select";
 import type { WorkRange } from "../../../types";
 
 const RANGE_OPTIONS: { value: WorkRange; label: string }[] = [

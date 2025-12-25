@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/shared/components/ui/dialog/dialog";
+} from "@/shared/components/ui/dialog/Dialog";
 import { toast } from "sonner";
 import { useToggleUserActive } from "../../hooks/useToggleUserActive";
 

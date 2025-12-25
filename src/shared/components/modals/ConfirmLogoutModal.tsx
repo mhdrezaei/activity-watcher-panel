@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogFooter,
   DialogTitle,
-} from "@/shared/components/ui/dialog/dialog";
+} from "@/shared/components/ui/dialog/Dialog";
 import { Button } from "@/shared/components/ui/button/Button";
 
 type Props = {

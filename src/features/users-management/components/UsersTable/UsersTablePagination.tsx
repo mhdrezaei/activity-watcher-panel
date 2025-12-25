@@ -7,7 +7,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shared/components/ui/select/select";
+} from "@/shared/components/ui/select/Select";
 
 type Props = {
   page: number;
