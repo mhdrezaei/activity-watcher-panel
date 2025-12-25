@@ -1,7 +1,7 @@
 // src/features/users-management/components/UsersTable/columns.ts
 import { ColumnDef } from "@tanstack/react-table";
 import { UserTableRow } from "../../types";
-import { Badge } from "@/shared/components/ui/badge";
+import { Badge } from "@/shared/components/ui/badge/Badge";
 import { ActiveToggleCell } from "./ActiveToggleCell";
 
 import { EditUserCell } from "./EditUserCell";

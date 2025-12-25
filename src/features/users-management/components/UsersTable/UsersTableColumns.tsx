@@ -1,6 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { UserTableRow } from "../../types";
-import { Badge } from "@/shared/components/ui/badge";
+import { Badge } from "@/shared/components/ui/badge/Badge";
 
 export const usersTableColumns: ColumnDef<UserTableRow>[] = [
   {

@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/shared/components/ui/button";
-import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
+import { Button } from "@/shared/components/ui/button/Button";
+import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs/Tabs";
 import { RotateCcw } from "lucide-react";
 import { PersianDatePicker } from "@/shared/components/ui/date-picker";
 import { PeriodMode } from "../hooks/useUserDetailsFilters";

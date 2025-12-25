@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/shared/components/ui/dialog/dialog";
+} from "@/shared/components/ui/dialog/Dialog";
 import { UserTableRow } from "../../types";
 import { EditUserForm } from "./EditUserForm";
 

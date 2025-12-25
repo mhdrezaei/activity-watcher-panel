@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/shared/components/ui/button";
-import { Input } from "@/shared/components/ui/input";
+import { Button } from "@/shared/components/ui/button/Button";
+import { Input } from "@/shared/components/ui/input/Input";
 import { useUpdateUser } from "../../hooks/useUpdateUser";
 import { UserTableRow } from "../../types";
 

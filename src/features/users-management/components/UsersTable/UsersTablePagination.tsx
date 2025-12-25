@@ -1,13 +1,13 @@
 "use client";
 
-import { Button } from "@/shared/components/ui/button";
+import { Button } from "@/shared/components/ui/button/Button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shared/components/ui/select/select";
+} from "@/shared/components/ui/select/Select";
 
 type Props = {
   page: number;

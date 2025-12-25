@@ -5,7 +5,7 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { CalendarDays } from "lucide-react";
 
-import { Button } from "@/shared/components/ui/button";
+import { Button } from "@/shared/components/ui/button/Button";
 import { cn } from "@/lib/utils/shadcn";
 
 /* ---------- Types ---------- */

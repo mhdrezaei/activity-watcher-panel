@@ -7,7 +7,7 @@ import {
 } from "../../utils/exportBarChart";
 import { printBarChart } from "../../utils/printBarChart";
 
-import { Button } from "@/shared/components/ui/button";
+import { Button } from "@/shared/components/ui/button/Button";
 import { Calendar, Download, RefreshCcw, Printer } from "lucide-react";
 
 import { BarChartSkeleton } from "./skeletons/BarChartSkeleton";

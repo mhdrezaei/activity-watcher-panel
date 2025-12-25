@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Switch } from "@/shared/components/ui/switch";
-import { Button } from "@/shared/components/ui/button";
+import { Switch } from "@/shared/components/ui/switch/Switch";
+import { Button } from "@/shared/components/ui/button/Button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/shared/components/ui/dialog/dialog";
+} from "@/shared/components/ui/dialog/Dialog";
 import { toast } from "sonner";
 import { useToggleUserActive } from "../../hooks/useToggleUserActive";
 

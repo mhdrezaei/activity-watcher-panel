@@ -5,7 +5,7 @@ import { useState } from "react";
 import BarChartClient from "@/features/analytics/overview/components/WorkCharts/BarChart/BarChart.client";
 
 import { Card, CardContent, CardHeader } from "@/shared/components/ui/card";
-import { Button } from "@/shared/components/ui/button";
+import { Button } from "@/shared/components/ui/button/Button";
 import { Settings, Printer } from "lucide-react";
 
 import { RangeSelect } from "@/features/analytics/overview/components/WorkCharts/filter/RangeSelect";
