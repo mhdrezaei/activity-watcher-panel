@@ -30,7 +30,7 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "@/shared/components/ui/tooltip";
+} from "@/shared/components/ui/tooltip/Tooltip";
 import { useRouter } from "next/navigation";
 
 const loginSchema = z.object({
