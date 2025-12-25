@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Switch } from "@/shared/components/ui/switch";
-import { Button } from "@/shared/components/ui/button";
+import { Button } from "@/shared/components/ui/button/Button";
 import {
   Dialog,
   DialogContent,

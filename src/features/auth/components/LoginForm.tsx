@@ -14,8 +14,8 @@ import {
   TabsContent,
 } from "@/shared/components/ui/tabs";
 
-import { Input } from "@/shared/components/ui/input";
-import { Button } from "@/shared/components/ui/button";
+import { Input } from "@/shared/components/ui/input/Input";
+import { Button } from "@/shared/components/ui/button/Button";
 
 import {
   Eye,
@@ -173,7 +173,7 @@ export function LoginForm() {
                 {...register("password")}
                 type={showPass ? "text" : "password"}
                 placeholder="رمز عبور"
-                className={`h-10 pr-10 pl-10 placeholder:text-right ${
+                className={`h-10 pr-10 pl-10 placeholder:text-start ${
                   formState.errors.password ? "border-red-500" : ""
                 }`}
                 onKeyUp={checkCapsLock}

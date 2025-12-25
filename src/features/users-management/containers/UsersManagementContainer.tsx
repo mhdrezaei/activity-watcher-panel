@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { UsersTable } from "../components/UsersTable/UsersTable";
 import { useUsersQuery } from "../hooks/useUsersQuery";
-import { Input } from "@/shared/components/ui/input";
+import { Input } from "@/shared/components/ui/input/Input";
 
 export function UsersManagementContainer() {
   const [page, setPage] = useState(0);

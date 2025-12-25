@@ -7,7 +7,7 @@ import {
   DialogFooter,
   DialogTitle,
 } from "@/shared/components/ui/dialog/dialog";
-import { Button } from "@/shared/components/ui/button";
+import { Button } from "@/shared/components/ui/button/Button";
 
 type Props = {
   open: boolean;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Input } from "@/shared/components/ui/input";
+import { Input } from "@/shared/components/ui/input/Input";
 import { User2 } from "lucide-react";
 import { UserListSkeleton } from "../skeletons/UserListSkeleton";
 import type { User } from "../../types";
