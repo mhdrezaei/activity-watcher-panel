@@ -12,7 +12,7 @@ import {
   TabsList,
   TabsTrigger,
   TabsContent,
-} from "@/shared/components/ui/tabs";
+} from "@/shared/components/ui/tabs/Tabs";
 
 import { Input } from "@/shared/components/ui/input/Input";
 import { Button } from "@/shared/components/ui/button/Button";

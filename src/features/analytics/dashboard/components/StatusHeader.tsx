@@ -1,6 +1,6 @@
 "use client";
 
-import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs/Tabs";
 import { AnalyticsTab, StatusHeaderProps } from "../types";
 
 export function StatusHeader({ value, onChange }: StatusHeaderProps) {

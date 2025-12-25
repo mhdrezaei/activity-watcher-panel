@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Switch } from "@/shared/components/ui/switch";
+import { Switch } from "@/shared/components/ui/switch/Switch";
 import { Button } from "@/shared/components/ui/button/Button";
 import {
   Dialog,
