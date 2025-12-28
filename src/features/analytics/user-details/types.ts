@@ -91,7 +91,7 @@ export interface UserApiResponse {
 
 /** Current user status */
 export interface UserCurrentStatusResponse {
-  afk_status: "not-afk" | "AFK" | "ACTIVE";
+  afk_status: "not-afk" | "afk" | "No data available";
   window_status: string;
   presence_status: string;
 }
