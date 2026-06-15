@@ -23,6 +23,9 @@ import type { WorkRange } from "../../types";
 import { RangeSelect } from "./filter/RangeSelect";
 import { ChartFilters } from "../../hooks/useOverviewFilters";
 
+// اضافه کردن ایمپورت مودال جدید
+import { ReportModal } from "./ReportModal/ReportModal";
+
 const RANGE_STORAGE_KEY = "analytics.workCharts.range";
 
 const WORK_RANGES = [
@@ -60,6 +63,9 @@ export function WorkCharts() {
   const [open, setOpen] = useState(false);
   const [range, setRange] = useState<WorkRange>(() => getInitialRange());
 
+  // استیت جدید برای کنترل مودال گزارش جامع
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+
   useEffect(() => {
     try {
       window.localStorage.setItem(RANGE_STORAGE_KEY, range);
@@ -85,105 +91,113 @@ export function WorkCharts() {
   const pieData = deviceCounts ? mapDeviceCountsToPie(deviceCounts) : [];
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-start items-center gap-3">
-        <RangeSelect value={range} onChange={setRange} />
-        <ChartFilters range="daily" onRangeChange={() => {}} />
-      </div>
+    <>
+      <div className="space-y-4">
+        <div className="flex justify-start items-center gap-3">
+          <RangeSelect value={range} onChange={setRange} />
+          <ChartFilters range="daily" onRangeChange={() => {}} />
+        </div>
 
-      <div className="w-full p-2 bg-accent rounded-xl">
-        <div className="flex justify-between items-center w-[98%] mx-auto py-3 border-b border- mb-2">
-          <h3 className="text-sm font-bold text-card-foreground">
-            میزان کارکرد
-          </h3>
+        <div className="w-full p-2 bg-accent rounded-xl">
+          <div className="flex justify-between items-center w-[98%] mx-auto py-3 border-b border- mb-2">
+            <h3 className="text-sm font-bold text-card-foreground">
+              میزان کارکرد
+            </h3>
 
-          <div className="flex items-center gap-2">
-            <Button
-              className="cursor-pointer"
-              size="icon"
-              variant="outline"
-              onClick={() => {
-                refetchBar();
-                refetchPie();
-              }}
-              disabled={isFetchingBar || isFetchingPie}
-            >
-              <RefreshCcw size={12} />
-            </Button>
-
-            <Button className="cursor-pointer" size="icon" variant="outline">
-              <Calendar size={12} />
-            </Button>
-            <Button
-              size="icon"
-              variant="outline"
-              onClick={() => printBarChart("bar-chart", "میزان کارکرد کاربران")}
-            >
-              <Printer size={12} />
-            </Button>
-            <div className="relative">
+            <div className="flex items-center gap-2">
               <Button
                 className="cursor-pointer"
                 size="icon"
                 variant="outline"
-                onClick={() => setOpen((p) => !p)}
+                onClick={() => {
+                  refetchBar();
+                  refetchPie();
+                }}
+                disabled={isFetchingBar || isFetchingPie}
               >
-                <Download size={12} />
+                <RefreshCcw size={12} />
               </Button>
 
-              {open && (
-                <div className="absolute left-0 mt-2 w-32 bg-card text-accent-foreground border rounded-xl shadow-md z-50">
-                  <button
-                    className="w-full px-3 py-2 rounded-xl text-center text-sm hover:bg-accent  cursor-pointer"
-                    onClick={() => {
-                      if (barChartRef.current) {
-                        exportBarChartToPDF(
-                          barChartRef.current,
-                          "میزان کارکرد کاربران"
-                        );
-                      }
-                      setOpen(false);
-                    }}
-                  >
-                    دانلود PDF
-                  </button>
+              <Button className="cursor-pointer" size="icon" variant="outline">
+                <Calendar size={12} />
+              </Button>
+              <Button
+                size="icon"
+                variant="outline"
+                onClick={() =>
+                  printBarChart("bar-chart", "میزان کارکرد کاربران")
+                }
+              >
+                <Printer size={12} />
+              </Button>
+              <div className="relative">
+                <Button
+                  className="cursor-pointer"
+                  size="icon"
+                  variant="outline"
+                  onClick={() => setOpen((p) => !p)}
+                >
+                  <Download size={12} />
+                </Button>
 
-                  <button
-                    className="w-full px-3 py-2 text-sm rounded-xl hover:bg-accent cursor-pointer text-center"
-                    onClick={() => {
-                      exportBarChartToExcel(
-                        barData?.data ?? [],
-                        "میزان کارکرد کاربران"
-                      );
-                      setOpen(false);
-                    }}
-                  >
-                    دانلود Excel
-                  </button>
-                </div>
-              )}
+                {open && (
+                  <div className="absolute left-0 mt-2 w-32 bg-card text-accent-foreground border rounded-xl shadow-md z-50">
+                    <button
+                      className="w-full px-3 py-2 rounded-xl text-center text-sm hover:bg-accent  cursor-pointer"
+                      onClick={() => {
+                        if (barChartRef.current) {
+                          exportBarChartToPDF(
+                            barChartRef.current,
+                            "میزان کارکرد کاربران",
+                          );
+                        }
+                        setOpen(false);
+                      }}
+                    >
+                      دانلود PDF
+                    </button>
+
+                    <button
+                      className="w-full px-3 py-2 text-sm rounded-xl hover:bg-accent cursor-pointer text-center"
+                      onClick={() => {
+                        // باز کردن مودال و بستن دراپ‌دان
+                        setIsReportModalOpen(true);
+                        setOpen(false);
+                      }}
+                    >
+                      گزارش جامع
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {isLoadingBar ? (
-            <BarChartSkeleton />
-          ) : (
-            <BarChartCardClient
-              ref={barChartRef}
-              data={barData?.data ?? []}
-              aggregation={barData?.aggregation ?? "hourly"}
-            />
-          )}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {isLoadingBar ? (
+              <BarChartSkeleton />
+            ) : (
+              <BarChartCardClient
+                ref={barChartRef}
+                data={barData?.data ?? []}
+                aggregation={barData?.aggregation ?? "hourly"}
+              />
+            )}
 
-          {isLoadingPie ? (
-            <PieChartSkeleton />
-          ) : (
-            <PieChartCardClient data={pieData} />
-          )}
+            {isLoadingPie ? (
+              <PieChartSkeleton />
+            ) : (
+              <PieChartCardClient data={pieData} />
+            )}
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* رندر کردن مودال جدید خارج از لایه‌بندی اصلی */}
+      <ReportModal
+        isOpen={isReportModalOpen}
+        onClose={() => setIsReportModalOpen(false)}
+      />
+    </>
   );
 }

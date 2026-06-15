@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/shared/components/ui/dialog/Dialog";
+} from "@/shared/components/ui/dialog/dialog";
 import { toast } from "sonner";
 import { useToggleUserActive } from "../../hooks/useToggleUserActive";
 
@@ -36,7 +36,7 @@ export function ActiveToggleCell({ id, active }: Props) {
           toast.error("خطا در انجام عملیات");
           setOpen(false);
         },
-      }
+      },
     );
   };
 
