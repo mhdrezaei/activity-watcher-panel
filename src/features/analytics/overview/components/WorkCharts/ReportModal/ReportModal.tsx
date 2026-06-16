@@ -94,10 +94,13 @@ export function ReportModal({ isOpen, onClose }: ReportModalProps) {
         resetAndClose();
       }, 2000);
     },
-    onError: (error: any) => {
+    onError: (error: {
+      response: { data: { message: string } };
+      message: string;
+    }) => {
       console.error(error);
       const errorMsg =
-        error.response?.data?.message || error.message || "خطایی رخ داده است";
+        error?.response?.data?.message || error.message || "خطایی رخ داده است";
 
       setErrorMessage(errorMsg);
       setStatus("error");

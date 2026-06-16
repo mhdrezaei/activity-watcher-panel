@@ -1,76 +1,22 @@
 "use client";
-import { forwardRef } from "react";
-import { ResponsiveBar } from "@nivo/bar";
+
+import { forwardRef, useMemo } from "react";
+import ReactECharts from "echarts-for-react";
+import type { EChartsOption } from "echarts";
 import { barData } from "../../../data/fakeOverviewData";
-import VerticalLabels from "./VerticalLabels";
-type NumericKeys<T> = {
-  [K in keyof T]-?: Exclude<T[K], undefined> extends number ? K : never;
-}[keyof T];
 
-function getYAxisConfig<T extends Record<string, unknown>>(
-  data: readonly T[],
-  keys: readonly NumericKeys<T>[],
-  aggregation: "hourly" | "daily" | "weekly" | "monthly"
-): {
-  ticks: number[];
-  max: number;
-  format: (v: number) => string;
-  unitLabel: string;
-} {
-  const maxMinutes = Math.max(
-    0,
-    ...data.map((item) =>
-      keys.reduce((sum, key) => sum + (Number(item[key]) ?? 0), 0)
-    )
-  );
+// تعریف تایپ‌ها برای رفع خطای ESLint/TS (حذف any)
+type TooltipPayload = {
+  name: string;
+  value?: number | string;
+  color: string;
+  seriesName: string;
+};
 
-  // helper: انتخاب step خوش‌عدد
-  const pickStep = (raw: number, candidates: number[]) => {
-    for (const c of candidates) if (c >= raw) return c;
-    return candidates[candidates.length - 1];
-  };
-
-  // ---------------- HOURLY (minutes) ----------------
-  if (aggregation === "hourly") {
-    // حداقل 60 دقیقه برای ظاهر خوب حتی اگر همه صفر باشند
-    const baseMax = Math.max(maxMinutes, 60);
-
-    // می‌خوایم 5 فاصله داشته باشیم => step تقریبی
-    const rawStep = Math.ceil(baseMax / 5);
-
-    // step های خوش‌فرم (دقیقه)
-    const step = pickStep(rawStep, [5, 10, 15, 20, 30, 45, 60, 90, 120]);
-
-    const max = step * 5;
-    const ticks = Array.from({ length: 6 }, (_, i) => i * step);
-
-    return {
-      max,
-      ticks,
-      format: (v) => `${v}`, // دقیقه
-      unitLabel: "دقیقه",
-    };
-  }
-
-  // ---------------- DAILY / WEEKLY / MONTHLY (hours) ----------------
-  // حداقل 5 ساعت برای ظاهر خوب حتی اگر همه صفر باشند
-  const baseHours = Math.max(Math.ceil(maxMinutes / 60), 5);
-
-  const rawStepHours = Math.ceil(baseHours / 5);
-
-  // step های خوش‌فرم (ساعت)
-  const stepHours = pickStep(rawStepHours, [1, 2, 3, 4, 6, 8, 12, 24]);
-
-  const max = stepHours * 5 * 60;
-  const ticks = Array.from({ length: 6 }, (_, i) => i * stepHours * 60);
-
-  return {
-    max,
-    ticks,
-    format: (v) => `${Math.round(v / 60)}`, // ساعت
-    unitLabel: "ساعت",
-  };
-}
+type ToolboxTooltipPayload = {
+  name: string;
+  title: string;
+};
 
 const BarChartCardClient = forwardRef<
   HTMLDivElement,
@@ -80,133 +26,245 @@ const BarChartCardClient = forwardRef<
     id?: string;
   }
 >(function BarChart({ data, aggregation, id }, ref) {
-  const keys = ["فعال", "عدم_فعالیت"];
-  const yAxis = getYAxisConfig(data, ["فعال", "عدم_فعالیت"], aggregation);
+  const option: EChartsOption = useMemo(() => {
+    // استخراج نام دسته‌ها و مقادیر
+    const categoryNames = data.map((item) => item.day);
+    const activeData = data.map((item) => item["فعال"] || 0);
+    const inactiveData = data.map((item) => item["عدم_فعالیت"] || 0);
+
+    const isHourly = aggregation === "hourly";
+    const yAxisLabel = isHourly ? "دقیقه" : "ساعت";
+
+    // تشخیص فونت و حالت دارک مود به صورت مستقیم از مرورگر
+    const isDark =
+      typeof document !== "undefined"
+        ? document.documentElement.classList.contains("dark")
+        : false;
+    const mainFont =
+      typeof document !== "undefined"
+        ? getComputedStyle(document.documentElement).getPropertyValue(
+            "--font-iran-sans",
+          ) || "sans-serif"
+        : "sans-serif";
+
+    // استفاده از کدهای Hex واقعی برای ECharts به جای var
+    const textColor = isDark ? "#f8fafc" : "#0f172a"; // معادل foreground
+    const mutedColor = isDark ? "#94a3b8" : "#64748b"; // معادل muted-foreground
+    const borderColor = isDark
+      ? "rgba(255, 255, 255, 0.15)"
+      : "rgba(0, 0, 0, 0.15)";
+
+    return {
+      tooltip: {
+        trigger: "axis",
+        axisPointer: {
+          type: "shadow",
+          label: { show: true, fontFamily: mainFont },
+        },
+        backgroundColor: "var(--watcher-primary-50)",
+        borderColor: "hsl(var(--border))",
+        textStyle: { fontFamily: mainFont, color: mutedColor },
+        formatter: (params: unknown) => {
+          const payload = params as TooltipPayload[];
+          if (!payload || !payload.length) return "";
+
+          let html = `<div style="text-align: right; direction: rtl; font-family: ${mainFont}; padding: 4px;">`;
+          html += `<div style="font-weight: bold; margin-bottom: 8px; ">${payload[0].name}</div>`;
+
+          payload.forEach((p) => {
+            const val = Number(p.value || 0);
+            const h = Math.floor(val / 60);
+            const m = val % 60;
+            const hText = h > 0 ? `${h} ساعت` : "";
+            const mText = m > 0 ? ` ${m} دقیقه` : "";
+            const displayValue = (hText + mText).trim() || "0 دقیقه";
+
+            html += `<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: ${p.color};"></span>
+              <span >${p.seriesName}: </span>
+              <span style="font-weight: 500;">${displayValue}</span>
+            </div>`;
+          });
+          html += `</div>`;
+          return html;
+        },
+      },
+      legend: {
+        data: ["فعال", "عدم_فعالیت"],
+        itemGap: 15,
+        bottom: 0, // قرارگیری در پایین‌ترین سطح
+        textStyle: {
+          fontSize: 12,
+          color: mutedColor,
+          fontWeight: "bold",
+          fontFamily: mainFont,
+        },
+      },
+      toolbox: {
+        show: true,
+        top: -5,
+        itemSize: 16,
+        textStyle: { fontFamily: mainFont },
+        itemGap: 10,
+        iconStyle: { borderColor: mutedColor },
+        tooltip: {
+          show: true,
+          formatter(params: unknown) {
+            const p = params as ToolboxTooltipPayload;
+            const tooltips: { [key: string]: string } = {
+              dataView: "نمایش داده",
+              magicType: "تغییر نوع نمودار",
+              restore: "بازنشانی",
+              saveAsImage: "ذخیره عکس",
+            };
+            return p.name === "magicType"
+              ? tooltips[p.name]
+              : tooltips[p.name] || p.title;
+          },
+        },
+        feature: {
+          dataView: {
+            show: true,
+            readOnly: true,
+            title: "نمایش داده",
+            lang: ["نمایش داده", "بستن", "بروزرسانی"],
+            optionToContent: function (opt: unknown) {
+              const options = opt as {
+                xAxis: { data: string[] }[];
+                series: { name: string; data: number[] }[];
+              };
+              const axisData = options.xAxis[0].data;
+              const series = options.series;
+
+              let table = `<table style="width:100%; text-align:center; direction:rtl; font-family:${mainFont}; border-collapse:collapse; font-size:14px; color:#0f172a;"><tbody><tr>`;
+              table += `<td style="padding: 10px; border-bottom: 2px solid ${borderColor}; font-weight:bold;color:#0f172a;">دوره</td>`;
+
+              series.forEach(function (serie) {
+                table += `<td style="padding: 10px; border-bottom: 2px solid ${borderColor}; font-weight:bold;color:#0f172a;">${serie.name}</td>`;
+              });
+              table += `</tr>`;
+
+              for (let i = 0, l = axisData.length; i < l; i++) {
+                table += `<tr><td style="padding: 10px; border-bottom: 1px solid ${borderColor};color:#0f172a;">${axisData[i]}</td>`;
+                for (let j = 0; j < series.length; j++) {
+                  table += `<td style="padding: 10px; border-bottom: 1px solid ${borderColor};color:#0f172a;">${series[j].data[i] || 0}</td>`;
+                }
+                table += `</tr>`;
+              }
+              table += `</tbody></table>`;
+              return table;
+            },
+          },
+          magicType: {
+            show: true,
+            type: ["line", "bar"],
+            title: { line: "خطی", bar: "میله‌ای" },
+          },
+          restore: { show: false, title: "بازنشانی" },
+          saveAsImage: { show: true, title: "ذخیره عکس" },
+        },
+      },
+      grid: {
+        top: "12%",
+        left: "3%",
+        right: "4%",
+        bottom: 80, // کاهش یافت تا میله‌ها پایین‌تر بیایند و کشیده‌تر شوند
+        containLabel: true,
+      },
+      dataZoom: [
+        {
+          show: true,
+          start: 0,
+          end: 100,
+          bottom: 45, // کاهش یافت تا به نوشته‌های محور X نزدیک‌تر شود
+          textStyle: { fontFamily: mainFont },
+        },
+        { type: "inside", start: 0, end: 100 },
+      ],
+      xAxis: [
+        {
+          type: "category",
+          data: categoryNames,
+          nameTextStyle: {
+            fontSize: 12,
+            color: mutedColor,
+            fontWeight: "bold",
+            fontFamily: mainFont,
+          },
+          axisLabel: {
+            interval: 0,
+            rotate: categoryNames.length > 5 ? 45 : 0,
+            fontSize: 12,
+            color: mutedColor,
+            fontFamily: mainFont,
+            formatter(value: string) {
+              const maxLabelLength = 10; // محدودتر شد تا زودتر ۳ نقطه بخورد
+              if (value.length > maxLabelLength) {
+                return `${value.slice(0, maxLabelLength)}...`;
+              }
+              return value;
+            },
+          },
+        },
+      ],
+      yAxis: [
+        {
+          type: "value",
+          name: `مقدار (${yAxisLabel})`,
+          nameTextStyle: {
+            fontSize: 12,
+            color: mutedColor,
+            fontWeight: "bold",
+            fontFamily: mainFont,
+          },
+          axisLabel: {
+            fontSize: 12,
+            color: mutedColor,
+            fontFamily: mainFont,
+            show: true,
+            formatter: (value: number) => {
+              return isHourly ? `${value}` : `${Math.round(value / 60)}`;
+            },
+          },
+          splitLine: {
+            show: true,
+            lineStyle: { color: borderColor, opacity: 0.5 },
+          },
+        },
+      ],
+      series: [
+        {
+          name: "فعال",
+          type: "bar",
+          data: activeData,
+          itemStyle: { color: "#6366f1", borderRadius: [4, 4, 0, 0] },
+          barMaxWidth: 60,
+        },
+        {
+          name: "عدم_فعالیت",
+          type: "bar",
+          data: inactiveData,
+          itemStyle: { color: "#f87171", borderRadius: [4, 4, 0, 0] },
+          barMaxWidth: 60,
+        },
+      ],
+    };
+  }, [data, aggregation]);
+
   return (
     <div
       ref={ref}
       id={id || "bar-chart"}
-      className="bg-card text-accent-foreground  rounded-2xl p-4 flex flex-col gap-4 w-full h-[380px]"
+      className="bg-card min-h-[420px] text-accent-foreground rounded-2xl p-4 flex flex-col gap-4 w-full"
     >
-      <ResponsiveBar
-        data={data}
-        theme={{
-          text: {
-            fontFamily: "var(--font-iran-sans)",
-            fill: "hsl(var(--foreground))",
-          },
-
-          axis: {
-            ticks: {
-              text: {
-                fill: "hsl(var(--muted-foreground))",
-                fontSize: 12,
-              },
-              line: {
-                stroke: "hsl(var(--muted-foreground))",
-              },
-            },
-            domain: {
-              line: {
-                stroke: "hsl(var(--muted-foreground))",
-                strokeWidth: 1,
-              },
-            },
-            legend: {
-              text: {
-                fill: "hsl(var(--muted-foreground))",
-              },
-            },
-          },
-
-          grid: {
-            line: {
-              stroke: "hsl(var(--muted-foreground))",
-              strokeWidth: 1,
-              strokeDasharray: "6 6",
-            },
-          },
-        }}
-        enableGridX={false}
-        enableGridY={true}
-        keys={keys}
-        indexBy="day"
-        groupMode="stacked"
-        layout="vertical"
-        /* ---------- Animation ---------- */
-        animate
-        motionConfig="gentle"
-        /* ---------- Style ---------- */
-        padding={0.4}
-        colors={["#6366f1", "#f87171"]}
-        colorBy="id"
-        borderRadius={2}
-        enableLabel={false}
-        /* ---------- Tooltip ---------- */
-        tooltip={({ id, value, color, indexValue }) => {
-          const total = Number(value ?? 0);
-          const h = Math.floor(total / 60);
-          const m = total % 60;
-
-          return (
-            <div className="min-w-56 rounded-xl border bg-accent px-3 py-2 shadow-md text-sm">
-              <div className="flex items-center gap-2">
-                <span
-                  className="inline-block h-2 w-2 rounded-full"
-                  style={{ background: color }}
-                />
-                <span className="text-muted-foreground">
-                  {String(indexValue)}
-                </span>
-              </div>
-
-              <div className="mt-1 font-medium">
-                {String(id)}: {h ? `${h} ساعت` : ""}
-                {m ? ` ${m} دقیقه` : ""}
-              </div>
-            </div>
-          );
-        }}
-        /* ---------- Grid & Axis ---------- */
-        valueScale={{ type: "linear", max: yAxis.max }}
-        // maxValue={yAxis.max}
-        gridYValues={yAxis.ticks}
-        margin={{ top: 50, right: 20, bottom: 40, left: 40 }}
-        axisBottom={{
-          tickSize: 0,
-          tickPadding: 12,
-        }}
-        axisLeft={{
-          tickSize: 1,
-          tickPadding: 20,
-          tickValues: yAxis.ticks,
-          format: yAxis.format,
-          legend: yAxis.unitLabel,
-          legendPosition: "middle",
-          legendOffset: -32,
-        }}
-        /* ---------- Legend ---------- */
-        legends={[
-          {
-            dataFrom: "keys",
-            anchor: "top-right",
-            direction: "row",
-            translateY: -50,
-            translateX: 80,
-            itemsSpacing: 8,
-            itemWidth: 100,
-            itemHeight: 20,
-            symbolSize: 14,
-            symbolShape: "circle",
-            symbolSpacing: -20,
-            itemTextColor: "#6b7280",
-          },
-        ]}
-        /* ---------- Custom Layers ---------- */
-        layers={["grid", "axes", "bars", VerticalLabels, "markers", "legends"]}
-        role="application"
+      <ReactECharts
+        style={{ height: 420, width: "100%" }} // هماهنگ با ارتفاع کانتینر
+        // opts={{ height: 520, width: "auto" }}
+        option={option}
+        notMerge={true}
       />
     </div>
   );
 });
+
 export default BarChartCardClient;
