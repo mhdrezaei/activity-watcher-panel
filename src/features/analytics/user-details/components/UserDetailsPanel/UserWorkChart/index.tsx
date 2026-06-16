@@ -47,7 +47,7 @@ export function UserWorkChart({ userId }: { userId: string }) {
               onClick={() =>
                 exportBarChartToPDF(
                   document.getElementById("user-work-chart")!,
-                  "میزان کارکرد کاربر"
+                  "میزان کارکرد کاربر",
                 )
               }
             >

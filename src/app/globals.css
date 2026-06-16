@@ -102,47 +102,54 @@
 }
 
 /* ======================================================
-   🌙 Dark Theme – Watcher
+   🌙 Dark Theme – Watcher (Refined & Professional)
 ====================================================== */
 html.dark {
-  --background: 210 14% 7%;
-  --foreground: 240 40% 96%;
+  /* پس‌زمینه اصلی: بسیار تیره، با کمی ته‌رنگ آبی/خاکستری برای عمق دادن */
+  --background: 222 47% 7%;
+  /* متن اصلی: سفید با کمی ماتی برای جلوگیری از خستگی چشم */
+  --foreground: 210 40% 98%;
 
-  --muted: 210 14% 13%;
-  --muted-foreground: 210 10% 60%;
+  /* بخش‌های ثانویه و hover: خاکستری-آبی تیره */
+  --muted: 217 33% 15%;
+  --muted-foreground: 215 20% 65%;
 
-  --card: 231, 55%, 20%, 1;
-  --card-foreground: 0, 0%, 100%, 0.59;
+  /* کارت‌ها: کمی روشن‌تر از پس‌زمینه تا تمایز ایجاد بشه اما جیغ نباشه */
+  --card: 222 40% 11%;
+  --card-foreground: 210 40% 98%;
 
-  --border: 232, 89%, 55%, 0.22;
-  --input: 210 14% 18%;
+  /* بردرها: ظریف و نامحسوس */
+  --border: 217 33% 20%;
+  --input: 217 33% 17%;
 
-  --primary: 232, 89%, 55%, 1;
-  --primary-foreground: 0 0% 100%;
+  /* رنگ‌های اصلی پروژه: روشن‌تر و شفاف‌تر برای دیده شدن روی دارک */
+  --primary: 224 76% 58%; /* یک آبی-بنفش مدرن */
+  --primary-foreground: 210 40% 98%;
 
-  --accent: 229, 22%, 10%, 1;
-  --accent-foreground: 210 40% 96%;
+  --accent: 217 33% 17%;
+  --accent-foreground: 210 40% 98%;
 
-  --destructive: 0 63% 60%;
+  --destructive: 0 63% 50%;
   --destructive-foreground: 210 40% 98%;
 
-  --ring: 210 100% 60%;
+  --ring: 224 76% 58%;
 
-  --chart-1: 210 100% 60%;
-  --chart-2: 210 100% 45%;
-  --chart-3: 42 97% 70%;
-  --chart-4: 151 82% 65%;
+  /* رنگ چارت‌ها: سازگار با دارک‌مود، زنده اما نه آزاردهنده */
+  --chart-1: 224 76% 58%;
+  --chart-2: 210 100% 65%;
+  --chart-3: 42 97% 65%;
+  --chart-4: 151 65% 55%;
   --chart-5: 10 82% 65%;
 
-  /* Watcher Dark Tokens */
-  --watcher-dark-900: hsl(210 14% 7%);
-  --watcher-dark-800: hsl(210 14% 9%);
-  --watcher-dark-700: hsl(210 14% 13%);
+  /* Watcher Dark Tokens (هماهنگ با تم جدید) */
+  --watcher-dark-900: hsl(222 47% 5%);
+  --watcher-dark-800: hsl(222 47% 7%);
+  --watcher-dark-700: hsl(222 40% 11%);
 
-  --watcher-dark-overlay: hsla(210, 14%, 7%, 0.7);
-  --watcher-dark-accent: hsla(240, 11%, 7%, 1);
+  /* گرادیانت پس‌زمینه رو هم ملایم‌تر کردیم */
+  --watcher-dark-overlay: hsla(222, 47%, 5%, 0.8);
+  --watcher-dark-accent: hsla(222, 47%, 9%, 1);
 
-  /* Dark Gradient Background */
   --watcher-dark-gradient: linear-gradient(
     180deg,
     var(--watcher-dark-accent) 0%,
