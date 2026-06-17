@@ -31,12 +31,11 @@ export interface AppUsage {
 
 /** Time-based item for work statistics chart */
 export interface WorkStat {
-  date: string; // label (hour / day / month)
-  activeMinutes: number; // active time
-  afkMinutes: number; // inactive time
+  date: string;
+  activeMinutes: number;
+  afkMinutes: number;
 }
 
-/** Full user details (UI) */
 export interface UserDetails {
   userId: string;
 

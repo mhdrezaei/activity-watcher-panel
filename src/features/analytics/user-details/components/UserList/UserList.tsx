@@ -32,7 +32,6 @@ export function UserList({
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // 👇 infinite scroll
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;

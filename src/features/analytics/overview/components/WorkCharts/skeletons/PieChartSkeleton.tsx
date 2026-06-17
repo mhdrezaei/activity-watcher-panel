@@ -29,7 +29,7 @@ export function PieChartSkeleton() {
 
           {/* Right Label */}
           <div className="absolute right-[5%] md:right-[15%] top-[40%] flex items-center">
-            <div className="w-6 md:w-10 h-[2px] bg-muted-foreground/20 dark:bg-muted/60" />
+            <div className="w-6 md:w-10 h-0.5 bg-muted-foreground/20 dark:bg-muted/60" />
             <div className="flex flex-col gap-2 ml-2">
               <div className="h-2.5 w-16 bg-muted-foreground/20 dark:bg-muted rounded" />
               <div className="h-2.5 w-8 bg-muted-foreground/20 dark:bg-muted rounded" />
@@ -38,7 +38,7 @@ export function PieChartSkeleton() {
 
           {/* Bottom Left Label */}
           <div className="absolute left-[5%] md:left-[15%] bottom-[25%] flex items-center flex-row-reverse">
-            <div className="w-6 md:w-10 h-[2px] bg-muted-foreground/20 dark:bg-muted/60" />
+            <div className="w-6 md:w-10 h-0.5 bg-muted-foreground/20 dark:bg-muted/60" />
             <div className="flex flex-col items-end gap-2 mr-2">
               <div className="h-2.5 w-14 bg-muted-foreground/20 dark:bg-muted rounded" />
               <div className="h-2.5 w-10 bg-muted-foreground/20 dark:bg-muted rounded" />
@@ -47,7 +47,7 @@ export function PieChartSkeleton() {
 
           {/* Top Left Label */}
           <div className="absolute left-[8%] md:left-[20%] top-[20%] flex items-center flex-row-reverse">
-            <div className="w-4 md:w-6 h-[2px] bg-muted-foreground/20 dark:bg-muted/60" />
+            <div className="w-4 md:w-6 h-0.5 bg-muted-foreground/20 dark:bg-muted/60" />
             <div className="flex flex-col items-end gap-2 mr-2">
               <div className="h-2.5 w-20 bg-muted-foreground/20 dark:bg-muted rounded" />
               <div className="h-2.5 w-12 bg-muted-foreground/20 dark:bg-muted rounded" />

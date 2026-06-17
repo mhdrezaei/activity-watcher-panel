@@ -1,7 +1,6 @@
 import { ChartCardSkeleton } from "./ChartCardSkeleton";
 
 export function BarChartSkeleton() {
-  // دیتای نمایشی برای ارتفاع ستون‌های کنار هم (فعال و عدم فعالیت)
   const mockHeights = [
     { active: 140, inactive: 90 },
     { active: 180, inactive: 120 },
@@ -14,7 +13,6 @@ export function BarChartSkeleton() {
 
   return (
     <ChartCardSkeleton>
-      {/* Container با انیمیشن Pulse تیلویند */}
       <div className="flex flex-col w-full h-[400px] animate-pulse">
         {/* Header: Legend & Toolbox */}
         <div className="flex justify-between items-start mb-8">
@@ -58,7 +56,7 @@ export function BarChartSkeleton() {
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div
                   key={i}
-                  className="w-full h-[1px] bg-muted-foreground/10 dark:bg-muted/40"
+                  className="w-full h-px bg-muted-foreground/10 dark:bg-muted/40"
                 />
               ))}
             </div>

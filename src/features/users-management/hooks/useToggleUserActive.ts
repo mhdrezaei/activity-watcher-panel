@@ -12,7 +12,7 @@ export function useToggleUserActive() {
     onSuccess: () => {
       toast.success("وضعیت کاربر با موفقیت بروزرسانی شد");
 
-      // 👇 invalidate تمام صفحات / سرچ‌ها
+      // 👇 invalidate search
       queryClient.invalidateQueries({
         queryKey: ["users-management"],
       });

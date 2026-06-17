@@ -23,7 +23,6 @@ export function AppUsageList({ items }: { items: AppUsage[] }) {
   return (
     <div className="flex flex-col gap-3 w-full">
       {items.map((item, index) => {
-        // نسبت زمان این برنامه به بیشترین زمان (عددی بین 0 تا 1)
         const ratio = item.total_minutes / max;
         const color = COLORS[index % COLORS.length];
 
@@ -32,7 +31,6 @@ export function AppUsageList({ items }: { items: AppUsage[] }) {
             key={item.app}
             className={cn(
               "rounded-xl px-4 py-3 text-sm transition-all flex flex-col",
-              // nowrap برای جلوگیری از شکسته شدن خطوط به پایین
               "whitespace-nowrap overflow-hidden",
               color,
             )}
