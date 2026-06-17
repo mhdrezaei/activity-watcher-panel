@@ -9,7 +9,7 @@ import {
   SelectItem,
   SelectGroup,
   SelectLabel,
-} from "./Select";
+} from "./select";
 
 /* --------------------------------
    Meta

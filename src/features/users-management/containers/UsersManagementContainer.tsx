@@ -27,7 +27,7 @@ export function UsersManagementContainer() {
           placeholder="جستجو کاربر..."
           value={search}
           onChange={(e) => {
-            setPage(0); // reset page on search
+            setPage(0);
             setSearch(e.target.value);
           }}
           className="max-w-sm text-card-foreground bg-card border-card-foreground p-2"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import BarChartClient from "@/features/analytics/overview/components/WorkCharts/BarChart/BarChart.client";
 
@@ -21,10 +21,11 @@ import Image from "next/image";
 import { useUserWorkStats } from "../../../hooks/useUserWorkStats";
 import { BarChartSkeleton } from "../../skeletons/BarChartSkeleton";
 import { mapAggregatesToBar } from "../../../transformers/mapAggregatesToBar";
+import { FullscreenButton } from "@/shared/components/widgets/FullscreenButton";
 
 export function UserWorkChart({ userId }: { userId: string }) {
   const [range, setRange] = useState<WorkRange>("current_day");
-
+  const targetref = useRef<HTMLDivElement>(null);
   const { data, isLoading } = useUserWorkStats(userId, range);
 
   if (isLoading || !data) {
@@ -40,7 +41,7 @@ export function UserWorkChart({ userId }: { userId: string }) {
         actions={
           <div className="flex items-center gap-2">
             <RangeSelect value={range} onChange={setRange} />
-
+            <FullscreenButton targetRef={targetref} />
             <Button
               size="icon"
               variant="outline"
@@ -91,6 +92,7 @@ export function UserWorkChart({ userId }: { userId: string }) {
 
       <CardContent>
         <BarChartClient
+          ref={targetref}
           id="user-work-chart"
           data={barData.data}
           aggregation={data.aggregation}

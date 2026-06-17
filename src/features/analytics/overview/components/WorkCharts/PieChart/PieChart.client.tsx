@@ -7,13 +7,12 @@ import type { PieSlice } from "@/features/analytics/overview/types";
 
 export default function PieChartCardClient({ data }: { data: PieSlice[] }) {
   const option: EChartsOption = useMemo(() => {
-    // تبدیل دیتای Nivo به فرمت قابل فهم برای ECharts
     const chartData = data.map((item) => ({
-      name: item.id || item.label, // بسته به ساختار دقیق دیتای شما
+      name: item.id || item.label,
       value: item.value,
       itemStyle: {
-        color: item.color, // حفظ رنگ اصلی از دیتا
-        borderRadius: 5, // معادل cornerRadius={5} در Nivo
+        color: item.color,
+        borderRadius: 5,
         borderWidth: 2,
       },
     }));
@@ -27,23 +26,17 @@ export default function PieChartCardClient({ data }: { data: PieSlice[] }) {
             "--font-iran-sans",
           ) || "sans-serif"
         : "sans-serif";
-    const textColor = isDark ? "#f8fafc" : "#0f172a"; // معادل foreground
-    const mutedColor = isDark ? "#94a3b8" : "#64748b"; // معادل muted-foreground
-    const borderColor = isDark
-      ? "rgba(255, 255, 255, 0.15)"
-      : "rgba(0, 0, 0, 0.15)";
+    const mutedColor = isDark ? "#94a3b8" : "#64748b";
 
     return {
       tooltip: {
         trigger: "item",
-        // نمایش نام، مقدار و درصد در تولتیپ
         formatter: "{b} : <b>{c}</b> ({d}%)",
         backgroundColor: "var(--watcher-primary-50)",
         borderColor: "hsl(var(--border))",
         textStyle: { fontFamily: mainFont },
       },
       legend: {
-        // تنظیمات Legend مشابه فایل هدف
         orient: "horizontal",
         left: "center",
         top: "top",
@@ -88,9 +81,9 @@ export default function PieChartCardClient({ data }: { data: PieSlice[] }) {
         {
           name: "آمار",
           type: "pie",
-          radius: ["40%", "70%"], // معادل innerRadius={0.5} نیوو
+          radius: ["40%", "70%"],
           center: ["50%", "55%"],
-          minAngle: 15, // جلوگیری از محو شدن مقادیر خیلی کوچک
+          minAngle: 15,
           emphasis: {
             label: {
               show: true,
@@ -111,8 +104,6 @@ export default function PieChartCardClient({ data }: { data: PieSlice[] }) {
             fontFamily: mainFont,
             fontSize: 12,
             fontWeight: "bold",
-            // color: "hsl(var(--foreground))",
-            // نمایش نام و درصد کنار هم در بیرون چارت
             formatter: "{b}\n{d}%",
             lineHeight: 24,
           },

@@ -6,11 +6,11 @@ const PAGE_SIZE = 10;
 
 export function useUserPicker(search: string) {
   return useInfiniteQuery<
-    PaginatedUsersResponse, // TQueryFnData
-    Error, // TError
-    InfiniteData<PaginatedUsersResponse, number>, // TData (مهم!)
-    ["user-picker", string], // TQueryKey
-    number // TPageParam
+    PaginatedUsersResponse,
+    Error,
+    InfiniteData<PaginatedUsersResponse, number>,
+    ["user-picker", string],
+    number
   >({
     queryKey: ["user-picker", search],
     initialPageParam: 0,

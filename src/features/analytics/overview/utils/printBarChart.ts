@@ -47,7 +47,6 @@ export function printBarChart(elementId: string, title: string) {
 
   printWindow.document.close();
 
-  // صبر برای render کامل SVG
   printWindow.onload = () => {
     printWindow.focus();
     printWindow.print();

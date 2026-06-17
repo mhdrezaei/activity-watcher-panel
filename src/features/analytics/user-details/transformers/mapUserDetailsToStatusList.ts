@@ -18,7 +18,7 @@ const AFK_STATUS_FA: Record<string, string> = {
 };
 
 export function mapCurrentStatusToStatusList(
-  status: UserCurrentStatusResponse
+  status: UserCurrentStatusResponse,
 ): {
   items: StatusItem[];
   footer: StatusFooter;
@@ -60,12 +60,3 @@ export function mapCurrentStatusToStatusList(
     },
   };
 }
-
-// function minutesToText(minutes: number) {
-//   const h = Math.floor(minutes / 60);
-//   const m = minutes % 60;
-
-//   if (h && m) return `${h} ساعت ${m} دقیقه`;
-//   if (h) return `${h} ساعت`;
-//   return `${m} دقیقه`;
-// }

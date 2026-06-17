@@ -22,18 +22,15 @@ interface ReportModalProps {
 
 export function ReportModal({ isOpen, onClose }: ReportModalProps) {
   const [range, setRange] = useState<string>("current_day");
-  // استیت‌های نمایشی برای کنترل UI انیمیشن‌ها
   const [status, setStatus] = useState<
     "idle" | "generating" | "downloading" | "success" | "error"
   >("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
-  // استفاده از useMutation برای مدیریت اصولی چرخه درخواست
   const generateReportMutation = useMutation({
     mutationFn: async () => {
       setStatus("generating");
 
-      // ۱. درخواست ساخت گزارش
       const postResponse = await apiClient.post(
         `report/generate/?range=${range}`,
       );
@@ -41,7 +38,6 @@ export function ReportModal({ isOpen, onClose }: ReportModalProps) {
 
       if (!reportId) throw new Error("آیدی گزارش دریافت نشد");
 
-      // ۲. بررسی وضعیت (Polling) - حداکثر ۳۰ بار با فاصله ۱ ثانیه
       let isDone = false;
       for (let i = 0; i < 30; i++) {
         const statusResponse = await apiClient.get(`report/status/${reportId}`);
@@ -49,14 +45,13 @@ export function ReportModal({ isOpen, onClose }: ReportModalProps) {
 
         if (currentStatus === "done") {
           isDone = true;
-          break; // خروج از حلقه در صورت موفقیت
+          break;
         }
 
         if (currentStatus === "error" || currentStatus === "failed") {
           throw new Error("تولید گزارش در سرور با خطا مواجه شد");
         }
 
-        // توقف ۱ ثانیه‌ای قبل از درخواست بعدی
         await new Promise((resolve) => setTimeout(resolve, 1000));
       }
 
@@ -64,7 +59,6 @@ export function ReportModal({ isOpen, onClose }: ReportModalProps) {
         throw new Error("زمان آماده‌سازی گزارش پایان یافت (Timeout)");
       }
 
-      // ۳. درخواست دانلود گزارش
       setStatus("downloading");
       const downloadResponse = await apiClient.get(
         `report/download/${reportId}/`,
@@ -73,10 +67,9 @@ export function ReportModal({ isOpen, onClose }: ReportModalProps) {
         },
       );
 
-      return downloadResponse.data; // برگرداندن فایل نهایی (Blob)
+      return downloadResponse.data;
     },
     onSuccess: (blob) => {
-      // ۴. ایجاد لینک دانلود و دریافت فایل در مرورگر
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.style.display = "none";
@@ -89,7 +82,6 @@ export function ReportModal({ isOpen, onClose }: ReportModalProps) {
 
       setStatus("success");
 
-      // بستن خودکار مودال بعد از ۲ ثانیه موفقیت
       setTimeout(() => {
         resetAndClose();
       }, 2000);
@@ -112,7 +104,7 @@ export function ReportModal({ isOpen, onClose }: ReportModalProps) {
     setTimeout(() => {
       setStatus("idle");
       setErrorMessage("");
-      generateReportMutation.reset(); // ریست کردن استیت React Query
+      generateReportMutation.reset();
     }, 300);
   };
 

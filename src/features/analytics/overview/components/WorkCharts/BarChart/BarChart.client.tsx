@@ -5,7 +5,6 @@ import ReactECharts from "echarts-for-react";
 import type { EChartsOption } from "echarts";
 import { barData } from "../../../data/fakeOverviewData";
 
-// تعریف تایپ‌ها برای رفع خطای ESLint/TS (حذف any)
 type TooltipPayload = {
   name: string;
   value?: number | string;
@@ -27,7 +26,6 @@ const BarChartCardClient = forwardRef<
   }
 >(function BarChart({ data, aggregation, id }, ref) {
   const option: EChartsOption = useMemo(() => {
-    // استخراج نام دسته‌ها و مقادیر
     const categoryNames = data.map((item) => item.day);
     const activeData = data.map((item) => item["فعال"] || 0);
     const inactiveData = data.map((item) => item["عدم_فعالیت"] || 0);
@@ -35,7 +33,6 @@ const BarChartCardClient = forwardRef<
     const isHourly = aggregation === "hourly";
     const yAxisLabel = isHourly ? "دقیقه" : "ساعت";
 
-    // تشخیص فونت و حالت دارک مود به صورت مستقیم از مرورگر
     const isDark =
       typeof document !== "undefined"
         ? document.documentElement.classList.contains("dark")
@@ -47,9 +44,7 @@ const BarChartCardClient = forwardRef<
           ) || "sans-serif"
         : "sans-serif";
 
-    // استفاده از کدهای Hex واقعی برای ECharts به جای var
-    const textColor = isDark ? "#f8fafc" : "#0f172a"; // معادل foreground
-    const mutedColor = isDark ? "#94a3b8" : "#64748b"; // معادل muted-foreground
+    const mutedColor = isDark ? "#94a3b8" : "#64748b";
     const borderColor = isDark
       ? "rgba(255, 255, 255, 0.15)"
       : "rgba(0, 0, 0, 0.15)";
@@ -92,7 +87,7 @@ const BarChartCardClient = forwardRef<
       legend: {
         data: ["فعال", "عدم_فعالیت"],
         itemGap: 15,
-        bottom: 0, // قرارگیری در پایین‌ترین سطح
+        bottom: 0,
         textStyle: {
           fontSize: 12,
           color: mutedColor,
@@ -168,7 +163,7 @@ const BarChartCardClient = forwardRef<
         top: "12%",
         left: "3%",
         right: "4%",
-        bottom: 80, // کاهش یافت تا میله‌ها پایین‌تر بیایند و کشیده‌تر شوند
+        bottom: 80,
         containLabel: true,
       },
       dataZoom: [
@@ -176,7 +171,7 @@ const BarChartCardClient = forwardRef<
           show: true,
           start: 0,
           end: 100,
-          bottom: 45, // کاهش یافت تا به نوشته‌های محور X نزدیک‌تر شود
+          bottom: 45,
           textStyle: { fontFamily: mainFont },
         },
         { type: "inside", start: 0, end: 100 },
@@ -198,7 +193,7 @@ const BarChartCardClient = forwardRef<
             color: mutedColor,
             fontFamily: mainFont,
             formatter(value: string) {
-              const maxLabelLength = 10; // محدودتر شد تا زودتر ۳ نقطه بخورد
+              const maxLabelLength = 10;
               if (value.length > maxLabelLength) {
                 return `${value.slice(0, maxLabelLength)}...`;
               }
@@ -258,8 +253,7 @@ const BarChartCardClient = forwardRef<
       className="bg-card min-h-[420px] text-accent-foreground rounded-2xl p-4 flex flex-col gap-4 w-full"
     >
       <ReactECharts
-        style={{ height: 420, width: "100%" }} // هماهنگ با ارتفاع کانتینر
-        // opts={{ height: 520, width: "auto" }}
+        style={{ height: 420, width: "100%" }}
         option={option}
         notMerge={true}
       />

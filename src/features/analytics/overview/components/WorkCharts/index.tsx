@@ -1,10 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import {
-  exportBarChartToExcel,
-  exportBarChartToPDF,
-} from "../../utils/exportBarChart";
+import { exportBarChartToPDF } from "../../utils/exportBarChart";
 import { printBarChart } from "../../utils/printBarChart";
 
 import { Button } from "@/shared/components/ui/button/Button";
@@ -23,8 +20,8 @@ import type { WorkRange } from "../../types";
 import { RangeSelect } from "./filter/RangeSelect";
 import { ChartFilters } from "../../hooks/useOverviewFilters";
 
-// اضافه کردن ایمپورت مودال جدید
 import { ReportModal } from "./ReportModal/ReportModal";
+import { FullscreenButton } from "@/shared/components/widgets/FullscreenButton";
 
 const RANGE_STORAGE_KEY = "analytics.workCharts.range";
 
@@ -63,7 +60,6 @@ export function WorkCharts() {
   const [open, setOpen] = useState(false);
   const [range, setRange] = useState<WorkRange>(() => getInitialRange());
 
-  // استیت جدید برای کنترل مودال گزارش جامع
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
   useEffect(() => {
@@ -89,7 +85,7 @@ export function WorkCharts() {
   } = useDeviceCounts();
 
   const pieData = deviceCounts ? mapDeviceCountsToPie(deviceCounts) : [];
-
+  const barchartRef = useRef<HTMLDivElement>(null);
   return (
     <>
       <div className="space-y-4">
@@ -98,7 +94,7 @@ export function WorkCharts() {
           <ChartFilters range="daily" onRangeChange={() => {}} />
         </div>
 
-        <div className="w-full p-2 bg-accent rounded-xl">
+        <div className="w-full p-2 bg-accent rounded-xl" ref={barchartRef}>
           <div className="flex justify-between items-center w-[98%] mx-auto py-3 border-b border- mb-2">
             <h3 className="text-sm font-bold text-card-foreground">
               میزان کارکرد
@@ -117,7 +113,11 @@ export function WorkCharts() {
               >
                 <RefreshCcw size={12} />
               </Button>
-
+              <FullscreenButton
+                className="cursor-pointer"
+                targetRef={barchartRef}
+                title="نمایش تمام صفحه"
+              />
               <Button className="cursor-pointer" size="icon" variant="outline">
                 <Calendar size={12} />
               </Button>
@@ -160,7 +160,6 @@ export function WorkCharts() {
                     <button
                       className="w-full px-3 py-2 text-sm rounded-xl hover:bg-accent cursor-pointer text-center"
                       onClick={() => {
-                        // باز کردن مودال و بستن دراپ‌دان
                         setIsReportModalOpen(true);
                         setOpen(false);
                       }}

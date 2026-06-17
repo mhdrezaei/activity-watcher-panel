@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./Dialog";
+} from "./dialog";
 import { Button } from "../button/Button";
 
 const meta: Meta<typeof Dialog> = {
