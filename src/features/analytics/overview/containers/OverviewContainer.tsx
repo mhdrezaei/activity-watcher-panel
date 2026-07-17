@@ -6,10 +6,10 @@ import { useDeviceCounts } from "../hooks/useDeviceCounts";
 import { mapDeviceCounts } from "../transformers/mapDeviceCounts";
 import { STAT_ICONS } from "../constants/statIcons";
 const PLACEHOLDER_STATS = [
-  { key: "total", label: "تعداد کل کاربران" },
-  { key: "present", label: "تعداد کاربران حاضر" },
-  { key: "active", label: "تعداد کاربران فعال" },
-  { key: "afk", label: "تعداد کاربران AFK" },
+  { key: "total", label: " کل کاربران" },
+  { key: "present", label: " کاربران حاضر" },
+  { key: "active", label: " کاربران فعال" },
+  { key: "afk", label: " کاربران AFK" },
 ] as const;
 
 export function OverviewContainer() {

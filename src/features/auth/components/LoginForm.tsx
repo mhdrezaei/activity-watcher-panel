@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AxiosError } from "axios";
 
 import { useEffect, useState } from "react";
 import { authService } from "@/core/services/authService";
@@ -37,7 +38,9 @@ const loginSchema = z.object({
   username: z.string().min(1, "نام کاربری الزامی است"),
   password: z.string().min(1, "رمز عبور الزامی است"),
 });
-
+export interface LoginError {
+  detail: string;
+}
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
@@ -104,9 +107,13 @@ export function LoginForm() {
       setTimeout(() => {
         router.replace("/dashboard");
       }, 700);
-    } catch (err) {
-      console.log(err);
-      setServerError("نام کاربری یا رمز عبور صحیح نمی‌باشد.");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any | AxiosError) {
+      console.log(error);
+      const errorMessage =
+        error.response?.data?.detail ||
+        "خطایی در برقراری ارتباط با سرور رخ داد.";
+      setServerError(errorMessage);
     } finally {
       setLoading(false);
     }

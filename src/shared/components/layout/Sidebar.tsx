@@ -28,9 +28,9 @@ type SidebarItem = {
 const MENU_ITEMS: SidebarItem[] = [
   { href: "/dashboard", label: "پیشخوان", icon: DashboardIcon },
   { href: "/users-management", label: "مدیریت کاربران", icon: UsersIcon },
-  { href: "/analytics", label: "نمودارها", icon: AnalyticsIcon },
-  { href: "/view", label: "گزارش گیری", icon: ChartIcon },
-  { href: "/settings", label: "تنظیمات سیستم", icon: SettingsIcon },
+  // { href: "/analytics", label: "نمودارها", icon: AnalyticsIcon },
+  // { href: "/view", label: "گزارش گیری", icon: ChartIcon },
+  // { href: "/settings", label: "تنظیمات سیستم", icon: SettingsIcon },
 ];
 
 export function Sidebar() {
@@ -43,8 +43,8 @@ export function Sidebar() {
   return (
     <aside
       className={clsx(
-        "sticky top-3 h-full rounded-2xl bg-card shadow-md transition-all duration-300",
-        expanded ? "w-64" : "w-20"
+        "hidden lg:block sticky top-3 h-full rounded-2xl bg-card shadow-md transition-all duration-300",
+        expanded ? "w-64" : "w-20",
       )}
     >
       <div className="h-full p-4 flex flex-col justify-between">
@@ -82,7 +82,7 @@ export function Sidebar() {
                       ? "text-white hover:bg-accent"
                       : active && theme === "light"
                         ? "bg-primary text-white"
-                        : "hover:bg-accent"
+                        : "hover:bg-accent",
                 )}
               >
                 <div className="w-8 h-8 flex items-center justify-center">
@@ -117,7 +117,7 @@ export function Sidebar() {
           onClick={() => setLogoutOpen(true)}
           className={clsx(
             "flex items-center gap-3 rounded-2xl px-3 py-3 hover:bg-accent cursor-pointer transition",
-            expanded ? "justify-start" : "justify-center"
+            expanded ? "justify-start" : "justify-center",
           )}
         >
           <LogOut size={18} />

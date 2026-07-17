@@ -25,7 +25,7 @@ export function DateTimeBox() {
     .format("DD MMMM YYYY");
 
   return (
-    <div className="flex items-center gap-4 text-primary text-sm">
+    <div className="flex items-center justify-center gap-4 text-primary text-sm">
       {/* Time */}
       <span>{date}</span>
 

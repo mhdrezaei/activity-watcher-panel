@@ -17,7 +17,7 @@ export function OverviewHeader({
       <Tabs
         value={value}
         onValueChange={onChange}
-        className=" flex-row-reverse justify-start items-center gap-5"
+        className=" flex-row-reverse lg:justify-start justify-center items-center gap-5"
       >
         <h2 className="font-bold text-lg">نمایش وضعیت</h2>
         <TabsList className="bg-muted p-1 rounded-xl flex gap-2">

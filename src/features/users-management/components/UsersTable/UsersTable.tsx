@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { flexRender } from "@tanstack/react-table";
@@ -36,9 +37,12 @@ export function UsersTable({
                     key={h.id}
                     title={`مرتب سازی بر اساس ${flexRender(
                       h.column.columnDef.header,
-                      h.getContext()
+                      h.getContext(),
                     )}`}
-                    className="p-3 text-right text-sm text-primary hover:bg-primary/10 border-b border-border cursor-pointer"
+                    className={`p-3 text-right text-sm text-primary hover:bg-primary/10 border-b border-border cursor-pointer ${
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      (h.column.columnDef.meta as any)?.className || ""
+                    }`}
                     onClick={h.column.getToggleSortingHandler()}
                   >
                     {flexRender(h.column.columnDef.header, h.getContext())}
@@ -55,7 +59,12 @@ export function UsersTable({
                 className="border-b border-border last:border-none hover:bg-primary/10"
               >
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="p-3 text-card-foreground">
+                  <td
+                    key={cell.id}
+                    className={`p-3 text-card-foreground ${
+                      (cell.column.columnDef.meta as any)?.className || ""
+                    }`}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

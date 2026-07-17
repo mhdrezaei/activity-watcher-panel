@@ -3,6 +3,7 @@
 import { User, HelpCircle } from "lucide-react";
 import Image from "next/image";
 import { ThemeToggle } from "../ui/theme-toggle/ThemeToggle";
+import { MobileMenu } from "./MobileMenu";
 
 export function Topbar() {
   return (
@@ -24,6 +25,7 @@ export function Topbar() {
 
         {/* Light / Dark Toggle */}
         <ThemeToggle />
+        <MobileMenu />
       </div>
     </header>
   );

@@ -3,7 +3,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { UserTableRow } from "../../types";
 import { Badge } from "@/shared/components/ui/badge/Badge";
 import { ActiveToggleCell } from "./ActiveToggleCell";
-
 import { EditUserCell } from "./EditUserCell";
 
 export const usersTableColumns: ColumnDef<UserTableRow>[] = [
@@ -30,6 +29,10 @@ export const usersTableColumns: ColumnDef<UserTableRow>[] = [
   {
     accessorKey: "createdAt",
     header: "تاریخ ایجاد",
+    // 👇 تغییر کلیدی: ارسال کلاس‌های مخفی‌کننده برای موبایل
+    meta: {
+      className: "hidden md:table-cell",
+    },
   },
   {
     id: "toggle",
@@ -37,7 +40,7 @@ export const usersTableColumns: ColumnDef<UserTableRow>[] = [
     cell: ({ row }) => (
       <ActiveToggleCell
         id={row.original.id}
-        active={row.original.status === "active" ? true : false}
+        active={row.original.status === "active"}
       />
     ),
   },

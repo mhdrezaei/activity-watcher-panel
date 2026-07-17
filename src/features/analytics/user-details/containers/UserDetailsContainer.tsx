@@ -18,7 +18,8 @@ export function UserDetailsContainer() {
   } = useUserSelection();
 
   return (
-    <div className="flex gap-4 w-full">
+    // 👇 در موبایل زیر هم و در دسکتاپ کنار هم قرار می‌گیرند
+    <div className="flex flex-col lg:flex-row gap-4 w-full">
       <UserList
         users={users}
         selectedId={selectedUserId}

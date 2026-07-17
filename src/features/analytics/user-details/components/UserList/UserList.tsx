@@ -13,7 +13,6 @@ type Props = {
   search: string;
   onSearch: (v: string) => void;
   isLoading: boolean;
-
   hasNextPage: boolean;
   fetchNextPage: () => void;
   isFetchingNextPage: boolean;
@@ -51,8 +50,9 @@ export function UserList({
   }, [hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   return (
-    <div className="min-w-96 bg-card text-card-foreground rounded-2xl border p-3 flex flex-col gap-3 max-h-[650px]">
-      <h3 className="font-semibold px-2">لیست کاربران</h3>
+    // 👇 تغییرات: عرض 100% در موبایل، عرض ثابت در دسکتاپ، کاهش ارتفاع در موبایل برای رفتار شبیه Select
+    <div className="w-full lg:min-w-96 lg:w-96 shrink-0 bg-card text-card-foreground rounded-2xl border p-3 flex flex-col gap-3 max-h-[300px] lg:max-h-[650px] transition-all">
+      <h3 className="font-semibold px-2 hidden lg:block">لیست کاربران</h3>
 
       <Input
         placeholder="جستجو کاربر..."
@@ -61,10 +61,10 @@ export function UserList({
         onChange={(e) => onSearch(e.target.value)}
       />
 
-      {/* 👇 ارتفاع ثابت + اسکرول داخلی */}
+      {/* 👇 تغییرات: استفاده از flex-1 به جای دادن ارتفاع ثابت مجدد */}
       <div
         ref={containerRef}
-        className="flex flex-col gap-2 overflow-y-auto custom-scrollbar max-h-[650px] pl-2"
+        className="flex flex-col gap-2 overflow-y-auto custom-scrollbar flex-1 pl-2"
       >
         {isLoading && users.length === 0 ? (
           <UserListSkeleton />
@@ -76,24 +76,24 @@ export function UserList({
               className={`flex items-center gap-3 rounded-md p-3 transition
                 ${
                   selectedId === u.id
-                    ? "border border-primary"
+                    ? "border border-primary bg-primary/5"
                     : "hover:bg-muted"
                 }`}
             >
-              <div className="p-2 bg-[#F2F4FC] rounded-md">
+              <div className="p-2 bg-[#F2F4FC] rounded-md shrink-0">
                 <User2 size={16} color="#5340EB" />
               </div>
 
-              <div className="flex flex-col items-start gap-1">
+              <div className="flex flex-col items-start gap-1 overflow-hidden">
                 <div
-                  className={`text-sm font-medium ${
+                  className={`text-sm font-medium truncate w-full text-right ${
                     selectedId === u.id ? "text-primary" : ""
                   }`}
                 >
                   {u.name}
                 </div>
 
-                <div className="text-xs text-gray-400">
+                <div className="text-xs text-gray-400 truncate w-full text-right">
                   دستگاه : {u.hostname}
                 </div>
               </div>
