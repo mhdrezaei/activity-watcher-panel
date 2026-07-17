@@ -18,30 +18,11 @@ interface ChartFiltersProps {
 export function ChartFilters({
   range,
   onRangeChange,
-  onRefresh,
+  // onRefresh,
 }: ChartFiltersProps) {
-  const [rangeDate, setRangeDate] = useState<[Date, Date] | null>(null);
+  // cost [rangeDate, setRangeDate] = useState<[Date, Date] | null>(null);
   return (
     <div className="flex flex-row-reverse items-center justify-end gap-3 w-full">
-      {/* Left actions */}
-      <div className="flex flex-row-reverse items-center gap-4">
-        {/* Refresh */}
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={onRefresh}
-          className="rounded-full bg-accent text-primary"
-        >
-          <RotateCcw className="w-4 h-4" />
-        </Button>
-
-        {/* Date picker trigger (placeholder فعلاً) */}
-        <PersianRangePicker
-          value={rangeDate}
-          onChange={(range) => setRangeDate(range)}
-        />
-      </div>
-
       {/* Tabs */}
       <Tabs value={range} onValueChange={(v) => onRangeChange(v as ChartRange)}>
         <TabsList className="bg-muted p-1 rounded-full">
