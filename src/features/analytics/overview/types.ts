@@ -13,6 +13,9 @@ export interface OverviewStat {
 export interface DeviceCountsResponse {
   afk_count: number;
   present_count: number;
+  present_devices: string[];
+  fully_working_devices: string[];
+  afk_devices: string[];
   fully_working: number;
   total_devices: number;
 }

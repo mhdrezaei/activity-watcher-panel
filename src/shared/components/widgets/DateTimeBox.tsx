@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import dayjs from "dayjs";
-import jalaliday from "jalaliday";
-
-dayjs.extend(jalaliday);
+// آدرس نسبی فایل dayjsSetup خود را اینجا قرار دهید
+import dayjs from "@/lib/utils/dayjsSetup";
 
 export function DateTimeBox() {
   const [now, setNow] = useState(new Date());
@@ -17,9 +15,11 @@ export function DateTimeBox() {
     return () => clearInterval(interval);
   }, []);
 
-  const time = dayjs(now).format("HH:mm");
+  // استفاده از tz برای قفل کردن زمان روی ایران
+  const time = dayjs(now).tz("Asia/Tehran").format("HH:mm");
 
   const date = dayjs(now)
+    .tz("Asia/Tehran")
     .calendar("jalali")
     .locale("fa")
     .format("DD MMMM YYYY");
