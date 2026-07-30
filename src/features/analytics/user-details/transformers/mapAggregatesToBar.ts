@@ -12,7 +12,7 @@ export type BarChartResult = {
 };
 
 export function mapAggregatesToBar(
-  response: UserWorkAggregatesResponse
+  response: UserWorkAggregatesResponse,
 ): BarChartResult {
   return {
     aggregation: response.aggregation,
@@ -28,11 +28,17 @@ function formatLabel(date: string, aggregation: string) {
   const d = new Date(date);
 
   if (aggregation === "hourly") {
-    return d.getHours().toString().padStart(2, "0");
+    // جایگزینی getHours با Intl برای اعمال دقیق تایم‌زون ایران (خروجی عدد انگلیسی دو رقمی مثل قبل)
+    return new Intl.DateTimeFormat("en-US", {
+      timeZone: "Asia/Tehran",
+      hour: "2-digit",
+      hour12: false,
+    }).format(d);
   }
 
   if (aggregation === "daily") {
     return d.toLocaleDateString("fa-IR", {
+      timeZone: "Asia/Tehran",
       month: "short",
       day: "numeric",
     });
@@ -40,6 +46,7 @@ function formatLabel(date: string, aggregation: string) {
 
   if (aggregation === "monthly") {
     return d.toLocaleDateString("fa-IR", {
+      timeZone: "Asia/Tehran",
       month: "short",
       year: "numeric",
     });
