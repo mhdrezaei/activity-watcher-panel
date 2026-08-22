@@ -1,3 +1,4 @@
+// src/features/analytics/overview/components/WorkCharts/filter/RangeSelect.tsx
 "use client";
 
 import {
@@ -11,6 +12,7 @@ import type { WorkRange } from "../../../types";
 
 const RANGE_OPTIONS: { value: WorkRange; label: string }[] = [
   { value: "current_day", label: "امروز" },
+  { value: "last_24_hours", label: "24 ساعت گذشته" },
   { value: "current_month", label: "ماه جاری" },
   { value: "last_3_days", label: "۳ روز اخیر" },
   { value: "last_7_days", label: "۷ روز اخیر" },

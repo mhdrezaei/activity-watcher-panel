@@ -1,3 +1,4 @@
+// src/features/analytics/overview/components/WorkCharts/skeletons/BarChartSkeleton.tsx
 import { ChartCardSkeleton } from "./ChartCardSkeleton";
 
 export function BarChartSkeleton() {

@@ -1,3 +1,4 @@
+// src/features/analytics/overview/components/WorkCharts/index.tsx
 "use client";
 
 import { useEffect, useState, useRef } from "react";
@@ -22,6 +23,7 @@ import { ChartFilters } from "../../hooks/useOverviewFilters";
 
 import { ReportModal } from "./ReportModal/ReportModal";
 import { FullscreenButton } from "@/shared/components/widgets/FullscreenButton";
+import { RoleSelect } from "./filter/RoleSelect";
 
 const RANGE_STORAGE_KEY = "analytics.workCharts.range";
 
@@ -29,6 +31,7 @@ const WORK_RANGES = [
   "current_day",
   "current_month",
   "last_3_7days",
+  "last_24_hours",
   "last_7_days",
   "last_30_days",
   "last_3_months",
@@ -62,6 +65,8 @@ export function WorkCharts() {
 
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
+  const [roleId, setRoleId] = useState<number | "all">("all");
+
   useEffect(() => {
     try {
       window.localStorage.setItem(RANGE_STORAGE_KEY, range);
@@ -70,12 +75,13 @@ export function WorkCharts() {
     }
   }, [range]);
 
+  // ارسال roleId به هوک‌ها برای تریگر شدن ریکوئست به بک‌اند در زمان تغییر نقش
   const {
     data: barData,
     isLoading: isLoadingBar,
     isFetching: isFetchingBar,
     refetch: refetchBar,
-  } = useWorkAggregates(range);
+  } = useWorkAggregates(range, roleId === "all" ? undefined : roleId);
 
   const {
     data: deviceCounts,
@@ -86,12 +92,14 @@ export function WorkCharts() {
 
   const pieData = deviceCounts ? mapDeviceCountsToPie(deviceCounts) : [];
   const barchartRef = useRef<HTMLDivElement>(null);
+
   return (
     <>
       <div className="space-y-4">
         <div className="flex justify-start items-center gap-3">
           <RangeSelect value={range} onChange={setRange} />
           <ChartFilters range="daily" onRangeChange={() => {}} />
+          <RoleSelect value={roleId} onChange={setRoleId} />
         </div>
 
         <div className="w-full p-2 bg-accent rounded-xl" ref={barchartRef}>
