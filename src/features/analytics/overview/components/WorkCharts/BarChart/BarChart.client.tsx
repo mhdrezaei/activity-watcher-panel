@@ -1,3 +1,4 @@
+// src/features/analytics/overview/components/WorkCharts/BarChart/BarChart.client.tsx
 "use client";
 
 import { forwardRef, useMemo } from "react";

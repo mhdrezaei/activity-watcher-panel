@@ -14,10 +14,10 @@ export interface WorkAggregatesResponse {
   data: WorkAggregateItem[];
 }
 
-export async function getWorkAggregates(range: WorkRange) {
+export async function getWorkAggregates(range: WorkRange, roleId?: number) {
   const res = await apiClient.get<WorkAggregatesResponse>(
     `/aggregates/current-day-works/`,
-    { params: { range } }
+    { params: { range, role: roleId } },
   );
 
   return res.data;
