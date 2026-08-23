@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/components/ui/select/select";
-import { useRoles } from "../../../hooks/useRole";
+import { useRoles } from "@/shared/hooks/useRole";
 
 type Props = {
   value: number | "all";

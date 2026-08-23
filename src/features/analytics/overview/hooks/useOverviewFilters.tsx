@@ -1,10 +1,6 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs/Tabs";
-import { Button } from "@/shared/components/ui/button/Button";
-import { RotateCcw } from "lucide-react";
-import { PersianRangePicker } from "@/shared/components/ui/date-picker";
-import { useState } from "react";
 
 export type ChartRange = "daily" | "weekly" | "monthly";
 
@@ -22,7 +18,7 @@ export function ChartFilters({
 }: ChartFiltersProps) {
   // cost [rangeDate, setRangeDate] = useState<[Date, Date] | null>(null);
   return (
-    <div className="flex flex-row-reverse items-center justify-end gap-3 w-full">
+    <div className="flex flex-row-reverse items-center justify-end gap-3">
       {/* Tabs */}
       <Tabs value={range} onValueChange={(v) => onRangeChange(v as ChartRange)}>
         <TabsList className="bg-muted p-1 rounded-full">

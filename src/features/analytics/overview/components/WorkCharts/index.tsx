@@ -23,7 +23,7 @@ import { ChartFilters } from "../../hooks/useOverviewFilters";
 
 import { ReportModal } from "./ReportModal/ReportModal";
 import { FullscreenButton } from "@/shared/components/widgets/FullscreenButton";
-import { RoleSelect } from "./filter/RoleSelect";
+import { RoleSelect } from "@/shared/components/ui/select-role/RoleSelect";
 
 const RANGE_STORAGE_KEY = "analytics.workCharts.range";
 

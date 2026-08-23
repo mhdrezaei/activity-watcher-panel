@@ -5,6 +5,7 @@ type GetUsersParams = {
   limit: number;
   offset: number;
   search?: string;
+  role?: string | number;
 };
 
 export const usersService = {

@@ -6,6 +6,9 @@ import { User2 } from "lucide-react";
 import { UserListSkeleton } from "../skeletons/UserListSkeleton";
 import type { User } from "../../types";
 
+// 👇 تغییر: ایمپورت کامپوننت انتخاب نقش (مسیر ایمپورت را در صورت نیاز بر اساس پوشه‌بندی خود تنظیم کنید)
+import { RoleSelect } from "@/shared/components/ui/select-role/RoleSelect";
+
 type Props = {
   users: User[];
   selectedId: string | null;
@@ -16,6 +19,9 @@ type Props = {
   hasNextPage: boolean;
   fetchNextPage: () => void;
   isFetchingNextPage: boolean;
+  // 👇 تغییر: اضافه شدن پراپ‌های مربوط به فیلتر نقش
+  roleId: number | "all";
+  onRoleChange: (id: number | "all") => void;
 };
 
 export function UserList({
@@ -28,6 +34,8 @@ export function UserList({
   hasNextPage,
   fetchNextPage,
   isFetchingNextPage,
+  roleId,
+  onRoleChange,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -50,18 +58,20 @@ export function UserList({
   }, [hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   return (
-    // 👇 تغییرات: عرض 100% در موبایل، عرض ثابت در دسکتاپ، کاهش ارتفاع در موبایل برای رفتار شبیه Select
     <div className="w-full lg:min-w-96 lg:w-96 shrink-0 bg-card text-card-foreground rounded-2xl border p-3 flex flex-col gap-3 max-h-[300px] lg:max-h-[650px] transition-all">
       <h3 className="font-semibold px-2 hidden lg:block">لیست کاربران</h3>
 
-      <Input
-        placeholder="جستجو کاربر..."
-        className="border-border p-2"
-        value={search}
-        onChange={(e) => onSearch(e.target.value)}
-      />
+      {/* 👇 تغییر: قرار گرفتن جستجو و فیلتر نقش در یک ردیف */}
+      <div className="flex items-center gap-2">
+        <Input
+          placeholder="جستجو کاربر..."
+          className="border-border p-2 flex-1"
+          value={search}
+          onChange={(e) => onSearch(e.target.value)}
+        />
+        <RoleSelect value={roleId} onChange={onRoleChange} />
+      </div>
 
-      {/* 👇 تغییرات: استفاده از flex-1 به جای دادن ارتفاع ثابت مجدد */}
       <div
         ref={containerRef}
         className="flex flex-col gap-2 overflow-y-auto custom-scrollbar flex-1 pl-2"
