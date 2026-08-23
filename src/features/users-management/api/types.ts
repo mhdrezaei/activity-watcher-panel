@@ -9,6 +9,7 @@ export interface UserApiResponse {
   active: boolean;
   created: string;
   updated: string;
+  role_name: string | null;
 }
 
 export interface PaginatedResponse<T> {

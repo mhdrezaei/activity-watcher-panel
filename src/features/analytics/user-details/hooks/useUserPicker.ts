@@ -4,15 +4,16 @@ import type { PaginatedUsersResponse } from "../api/types";
 
 const PAGE_SIZE = 10;
 
-export function useUserPicker(search: string) {
+// 👇 تغییر: دریافت roleId به عنوان پارامتر دوم
+export function useUserPicker(search: string, roleId: number | "all") {
   return useInfiniteQuery<
     PaginatedUsersResponse,
     Error,
     InfiniteData<PaginatedUsersResponse, number>,
-    ["user-picker", string],
+    ["user-picker", string, number | "all"], // 👇 تغییر: اضافه شدن تایپ roleId به آرایه QueryKey
     number
   >({
-    queryKey: ["user-picker", search],
+    queryKey: ["user-picker", search, roleId], // 👇 تغییر: اضافه شدن roleId به کلید
     initialPageParam: 0,
 
     queryFn: ({ pageParam }) =>
@@ -20,6 +21,8 @@ export function useUserPicker(search: string) {
         limit: PAGE_SIZE,
         offset: pageParam,
         search: search || undefined,
+        // 👇 تغییر: ارسال نقش به API. اگر all بود undefined می‌فرستیم تا فیلتر نشود
+        role: roleId === "all" ? undefined : roleId,
       }),
 
     getNextPageParam: (lastPage, pages) => {

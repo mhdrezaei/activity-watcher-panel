@@ -1,12 +1,14 @@
 import { useState, useMemo } from "react";
 import { useUserPicker } from "./useUserPicker";
 
-export function useUserSelection() {
+// 👇 تغییر: دریافت roleId به عنوان پارامتر ورودی
+export function useUserSelection(roleId: number | "all") {
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
 
+  // 👇 تغییر: ارسال roleId به هوک useUserPicker
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useUserPicker(search);
+    useUserPicker(search, roleId);
 
   const users = useMemo(() => {
     if (!data) return [];

@@ -6,11 +6,12 @@ type GetUsersParams = {
   limit: number;
   offset: number;
   search?: string;
+  role: number | undefined;
 };
 
 export const usersService = {
   getUsers: async (
-    params: GetUsersParams
+    params: GetUsersParams,
   ): Promise<PaginatedResponse<UserApiResponse>> => {
     const res = await apiClient.get("/device/", {
       params,

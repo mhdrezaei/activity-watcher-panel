@@ -10,5 +10,6 @@ export function mapUsersToTable(data: UserApiResponse[]): UserTableRow[] {
     status: u.active ? "active" : "inactive",
     createdAt: formatToJalali(u.created),
     updatedAt: formatToJalali(u.updated),
+    role_name: u.role_name,
   }));
 }

@@ -6,18 +6,21 @@ type Params = {
   page: number;
   pageSize: number;
   search: string;
+  roleId?: number | "all"; // اضافه شدن تایپ نقش
 };
 
-export function useUsersQuery({ page, pageSize, search }: Params) {
+export function useUsersQuery({ page, pageSize, search, roleId }: Params) {
   const offset = page * pageSize;
 
   return useQuery({
-    queryKey: ["users-management", page, pageSize, search],
+    // اضافه شدن roleId به آرایه queryKey برای رفرش شدن دیتا هنگام تغییر فیلتر
+    queryKey: ["users-management", page, pageSize, search, roleId],
     queryFn: () =>
       usersService.getUsers({
         limit: pageSize,
         offset,
         search: search || undefined,
+        role: roleId === "all" ? undefined : roleId, // ارسال به سرویس
       }),
     select: (res) => ({
       rows: mapUsersToTable(res.results),
