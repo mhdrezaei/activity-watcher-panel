@@ -12,6 +12,10 @@ export const usersTableColumns: ColumnDef<UserTableRow>[] = [
     header: "دستگاه",
   },
   {
+    accessorKey: "role_name",
+    header: "نقش",
+  },
+  {
     accessorKey: "status",
     header: "وضعیت",
     cell: ({ getValue }) => {
