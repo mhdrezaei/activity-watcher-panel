@@ -1,4 +1,4 @@
-import type { WorkRange } from "../types";
+import { WorkRange } from "@/shared/types/types";
 
 export const WORK_RANGES: { label: string; value: WorkRange }[] = [
   { label: "امروز", value: "current_day" },

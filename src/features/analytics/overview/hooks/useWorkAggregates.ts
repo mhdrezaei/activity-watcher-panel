@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getWorkAggregates } from "../api/workAggregatesService";
 import { mapAggregatesToBar } from "../transformers/mapAggregatesToBar";
-import type { WorkRange } from "../types";
+import { WorkRange } from "@/shared/types/types";
 
 export function useWorkAggregates(range: WorkRange, roleId?: number) {
   return useQuery({

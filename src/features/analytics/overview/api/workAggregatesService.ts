@@ -1,5 +1,5 @@
 import apiClient from "@/lib/axiosClient";
-import type { WorkRange } from "../types";
+import { WorkRange } from "@/shared/types/types";
 
 export interface WorkAggregateItem {
   date: string;

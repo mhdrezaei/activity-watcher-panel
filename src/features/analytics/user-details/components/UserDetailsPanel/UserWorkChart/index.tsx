@@ -9,7 +9,6 @@ import { Button } from "@/shared/components/ui/button/Button";
 import { Settings, Printer } from "lucide-react";
 
 import { RangeSelect } from "@/features/analytics/overview/components/WorkCharts/filter/RangeSelect";
-import type { WorkRange } from "@/features/analytics/overview/types";
 
 import {
   exportBarChartToPDF,
@@ -22,6 +21,7 @@ import { useUserWorkStats } from "../../../hooks/useUserWorkStats";
 import { BarChartSkeleton } from "../../skeletons/BarChartSkeleton";
 import { mapAggregatesToBar } from "../../../transformers/mapAggregatesToBar";
 import { FullscreenButton } from "@/shared/components/widgets/FullscreenButton";
+import { WorkRange } from "@/shared/types/types";
 
 export function UserWorkChart({ userId }: { userId: string }) {
   const [range, setRange] = useState<WorkRange>("current_day");
