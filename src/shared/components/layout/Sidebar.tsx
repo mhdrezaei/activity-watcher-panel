@@ -7,13 +7,11 @@ import { ConfirmLogoutModal } from "@/shared/components/modals/ConfirmLogoutModa
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
-import { LogOut } from "lucide-react";
+import { LogOut, ChartSpline } from "lucide-react";
 
 import {
   DashboardIcon,
   UsersIcon,
-  AnalyticsIcon,
-  SettingsIcon,
   MenuIcon,
   ExpandedMenuIcon,
 } from "@/shared/assets/icons";
@@ -29,7 +27,7 @@ const MENU_ITEMS: SidebarItem[] = [
   { href: "/dashboard", label: "پیشخوان", icon: DashboardIcon },
   { href: "/users-management", label: "مدیریت کاربران", icon: UsersIcon },
   { href: "/compare-dashboard", label: "مقایسه کاربران", icon: ChartIcon },
-  // { href: "/view", label: "گزارش گیری", icon: ChartIcon },
+  { href: "/performsnce-per-role", label: "عمکرد نقش ها", icon: ChartSpline },
   // { href: "/settings", label: "تنظیمات سیستم", icon: SettingsIcon },
 ];
 

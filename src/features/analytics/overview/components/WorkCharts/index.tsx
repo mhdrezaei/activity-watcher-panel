@@ -17,13 +17,13 @@ import { useDeviceCounts } from "../../hooks/useDeviceCounts";
 import { mapDeviceCountsToPie } from "../../transformers/mapDeviceCountsToPie";
 import { useWorkAggregates } from "../../hooks/useWorkAggregates";
 
-import type { WorkRange } from "../../types";
 import { RangeSelect } from "./filter/RangeSelect";
 import { ChartFilters } from "../../hooks/useOverviewFilters";
 
 import { ReportModal } from "./ReportModal/ReportModal";
 import { FullscreenButton } from "@/shared/components/widgets/FullscreenButton";
 import { RoleSelect } from "@/shared/components/ui/select-role/RoleSelect";
+import { WorkRange } from "@/shared/types/types";
 
 const RANGE_STORAGE_KEY = "analytics.workCharts.range";
 
