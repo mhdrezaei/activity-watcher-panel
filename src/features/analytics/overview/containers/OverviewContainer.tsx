@@ -3,6 +3,7 @@
 
 import { OverviewCards } from "../components/OverviewCards/OverviewCards";
 import { WorkCharts } from "../components/WorkCharts";
+import { LeaderboardSection } from "../components/Leaderboard/LeaderboardSection";
 import { useDeviceCounts } from "../hooks/useDeviceCounts";
 import { mapDeviceCounts } from "../transformers/mapDeviceCounts";
 import { STAT_ICONS } from "../constants/statIcons";
@@ -44,6 +45,7 @@ export function OverviewContainer() {
     <div className="bg-card rounded-2xl p-6 border border-border shadow-sm space-y-6">
       <OverviewCards stats={stats} isLoading={isLoading} />
       <WorkCharts />
+      <LeaderboardSection />
     </div>
   );
 }

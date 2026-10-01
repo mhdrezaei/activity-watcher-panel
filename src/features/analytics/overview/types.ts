@@ -40,3 +40,35 @@ export interface Role {
   description: string;
   device_count: number;
 }
+
+import { WorkRange } from "@/shared/types/types";
+
+export interface LeaderboardUser {
+  device_name: string;
+  role: string;
+  working_min: number;
+  inactive_min: number;
+  total_min: number;
+  active_pct: number;
+}
+
+export interface LeaderboardResponse {
+  range: WorkRange;
+  rank_by: string;
+  limit: number;
+  min_minutes: number;
+  from: string;
+  to: string;
+  ranked: number;
+  top: LeaderboardUser[];
+  bottom: LeaderboardUser[];
+}
+
+export interface LeaderboardParams {
+  range: WorkRange;
+  group_by?: string;
+  roles?: string;
+  rank_by?: string;
+  limit?: number;
+  min_minutes?: number;
+}
