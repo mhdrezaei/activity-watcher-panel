@@ -7,16 +7,14 @@ import { ConfirmLogoutModal } from "@/shared/components/modals/ConfirmLogoutModa
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
-import { LogOut, ChartSpline, BriefcaseBusiness } from "lucide-react";
+import { LogOut, ChartSpline, BriefcaseBusiness, LayoutDashboard, Users, LineChart } from "lucide-react";
 
 import {
-  DashboardIcon,
-  UsersIcon,
   MenuIcon,
   ExpandedMenuIcon,
 } from "@/shared/assets/icons";
-import { ChartIcon } from "@/shared/assets/icons/ChartIcon";
 import { useThemeStore } from "@/store/theme.store";
+
 type SidebarItem = {
   href: string;
   label: string;
@@ -24,9 +22,9 @@ type SidebarItem = {
 };
 
 const MENU_ITEMS: SidebarItem[] = [
-  { href: "/dashboard", label: "پیشخوان", icon: DashboardIcon },
-  { href: "/users-management", label: "مدیریت کاربران", icon: UsersIcon },
-  { href: "/compare-dashboard", label: "مقایسه کاربران", icon: ChartIcon },
+  { href: "/dashboard", label: "پیشخوان", icon: LayoutDashboard },
+  { href: "/users-management", label: "مدیریت کاربران", icon: Users },
+  { href: "/compare-dashboard", label: "مقایسه کاربران", icon: LineChart },
   { href: "/performsnce-per-role", label: "عمکرد نقش ها", icon: ChartSpline },
   { href: "/roles-comparison", label: "مقایسه کارکرد نقش‌ها", icon: BriefcaseBusiness },
 ];
@@ -75,24 +73,24 @@ export function Sidebar() {
                 className={clsx(
                   "flex items-center gap-3 rounded-2xl px-2 py-2 transition-all",
                   active && theme === "dark"
-                    ? "bg-primary text-white"
+                    ? "bg-primary text-[#e5e7eb]"
                     : !active && theme === "dark"
-                      ? "text-white hover:bg-accent"
+                      ? "text-[#e5e7eb] hover:bg-accent"
                       : active && theme === "light"
-                        ? "bg-primary text-white"
+                        ? "bg-primary text-[#e5e7eb]"
                         : "hover:bg-accent",
                 )}
               >
                 <div className="w-8 h-8 flex items-center justify-center">
                   <Icon
-                    active={active}
+                    size={18}
                     color={
                       active && theme === "dark"
-                        ? "#fff"
+                        ? "#e5e7eb"
                         : !active && theme === "dark"
-                          ? "#fff"
+                          ? "#e5e7eb"
                           : active && theme === "light"
-                            ? "#fff"
+                            ? "#e5e7eb"
                             : "#222"
                     }
                   />
