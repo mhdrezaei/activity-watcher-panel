@@ -1,21 +1,20 @@
-// src/features/analytics/overview/components/DevicePerformance/DevicePerformanceChart.client.tsx
 "use client";
 
 import React, { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import type { EChartsOption } from "echarts";
 
-interface DevicePerformanceChartProps {
+interface RolesComparisonChartProps {
   option: EChartsOption;
   height?: number | string;
   loading?: boolean;
 }
 
-export default function DevicePerformanceChartClient({
+export default function RolesComparisonChartClient({
   option,
   height = 450,
   loading = false,
-}: DevicePerformanceChartProps) {
+}: RolesComparisonChartProps) {
   const chartRef = useRef<HTMLDivElement>(null);
   const chartInstance = useRef<echarts.ECharts | null>(null);
 
@@ -85,6 +84,17 @@ export default function DevicePerformanceChartClient({
             color: axisTextColor,
           },
         },
+        series: Array.isArray(option.series) 
+          ? option.series.map((s: any) => ({
+              ...s,
+              endLabel: {
+                ...s.endLabel,
+                color: isDark ? "#e5e7eb" : "inherit", // خاکستری بسیار روشن در دارک‌مود
+                textBorderColor: 'transparent',
+                textBorderWidth: 0,
+              }
+            }))
+          : option.series,
       };
 
       chartInstance.current?.setOption(themedOption, { notMerge: true });
