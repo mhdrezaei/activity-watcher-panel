@@ -3,7 +3,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { Loader2, CheckCircle2, AlertCircle, Info } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import {
   Dialog,
@@ -13,6 +13,18 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/shared/components/ui/dialog/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/shared/components/ui/tooltip/Tooltip";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/components/ui/select/select";
 import { Button } from "@/shared/components/ui/button/Button";
 import { apiClient } from "@/lib/axiosClient";
 
@@ -23,6 +35,7 @@ interface ReportModalProps {
 
 export function ReportModal({ isOpen, onClose }: ReportModalProps) {
   const [range, setRange] = useState<string>("current_day");
+  const [layout, setLayout] = useState<string>("discrete");
   const [status, setStatus] = useState<
     "idle" | "generating" | "downloading" | "success" | "error"
   >("idle");
@@ -33,7 +46,7 @@ export function ReportModal({ isOpen, onClose }: ReportModalProps) {
       setStatus("generating");
 
       const postResponse = await apiClient.post(
-        `report/generate/?range=${range}`,
+        `report/generate/?range=${range}&layout=${layout}`,
       );
       const reportId = postResponse.data?.report_id;
 
@@ -75,7 +88,7 @@ export function ReportModal({ isOpen, onClose }: ReportModalProps) {
       const a = document.createElement("a");
       a.style.display = "none";
       a.href = url;
-      a.download = `Report_${range}_${new Date().getTime()}.xlsx`;
+      a.download = `Report_${range}_${layout}_${new Date().getTime()}.xlsx`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -120,28 +133,66 @@ export function ReportModal({ isOpen, onClose }: ReportModalProps) {
         </DialogHeader>
 
         <div className="flex flex-col gap-4 py-4">
-          <label
-            htmlFor="report-range"
-            className="text-sm font-medium text-foreground"
-          >
-            بازه زمانی:
-          </label>
-          <select
-            id="report-range"
-            value={range}
-            onChange={(e) => setRange(e.target.value)}
-            disabled={status !== "idle" && status !== "error"}
-            className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            <option value="current_day">امروز</option>
-            <option value="last_2_days">۲ روز گذشته </option>
-            <option value="last_3_days">۳ روز گذشته</option>
-            <option value="current_month">ماه جاری</option>
-            <option value="last_7_days">۷ روز گذشته </option>
-            <option value="last_30_days">۳۰ روز گذشته</option>
-            <option value="last_3_months">۳ ماه گذشته </option>
-            <option value="last_6_months">۶ ماه گذشته </option>
-          </select>
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="report-range"
+              className="text-sm font-medium text-foreground"
+            >
+              بازه زمانی:
+            </label>
+            <Select
+              value={range}
+              onValueChange={setRange}
+              disabled={status !== "idle" && status !== "error"}
+            >
+              <SelectTrigger id="report-range" className="w-full h-10">
+                <SelectValue placeholder="انتخاب بازه زمانی" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="current_day">امروز</SelectItem>
+                <SelectItem value="last_2_days">۲ روز گذشته</SelectItem>
+                <SelectItem value="last_3_days">۳ روز گذشته</SelectItem>
+                <SelectItem value="current_month">ماه جاری</SelectItem>
+                <SelectItem value="last_7_days">۷ روز گذشته</SelectItem>
+                <SelectItem value="last_30_days">۳۰ روز گذشته</SelectItem>
+                <SelectItem value="last_3_months">۳ ماه گذشته</SelectItem>
+                <SelectItem value="last_6_months">۶ ماه گذشته</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <label
+                htmlFor="report-layout"
+                className="text-sm font-medium text-foreground"
+              >
+                مدل گزارش:
+              </label>
+              <Tooltip>
+                <TooltipTrigger type="button" className="text-muted-foreground hover:text-foreground transition-colors outline-none cursor-pointer">
+                  <Info size={16} />
+                </TooltipTrigger>
+                <TooltipContent side="top" className="max-w-[250px] text-right font-shabnam">
+                  <p className="text-sm"><b>مجزا (Discrete):</b> به ازای هر روز یک شیت (Sheet) مجزا در فایل اکسل ایجاد می‌شود.</p>
+                  <p className="mt-2 text-sm"><b>یکپارچه (Merged):</b> کل بازه زمانی در قالب یک شیت پیوسته نمایش داده می‌شود.</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+            <Select
+              value={layout}
+              onValueChange={setLayout}
+              disabled={status !== "idle" && status !== "error"}
+            >
+              <SelectTrigger id="report-layout" className="w-full h-10">
+                <SelectValue placeholder="انتخاب مدل گزارش" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="discrete">مجزا (هر روز در یک شیت)</SelectItem>
+                <SelectItem value="merged">یکپارچه (کل بازه در یک شیت)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
           <div className="h-8 flex items-center justify-center mt-2">
             <AnimatePresence mode="wait">
