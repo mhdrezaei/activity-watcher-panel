@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
-import { LogOut, Menu, X } from "lucide-react";
+import { LogOut, Menu, X, ChartSpline, BriefcaseBusiness } from "lucide-react";
 
 import { useLogout } from "@/shared/hooks/useLogout";
 import { ConfirmLogoutModal } from "@/shared/components/modals/ConfirmLogoutModal";
@@ -22,15 +22,15 @@ import { ChartIcon } from "@/shared/assets/icons/ChartIcon";
 type SidebarItem = {
   href: string;
   label: string;
-  icon: React.ComponentType<{ active?: boolean; color?: string }>;
+  icon: React.ComponentType<any>;
 };
 
 const MENU_ITEMS: SidebarItem[] = [
   { href: "/dashboard", label: "پیشخوان", icon: DashboardIcon },
   { href: "/users-management", label: "مدیریت کاربران", icon: UsersIcon },
   { href: "/compare-dashboard", label: "مقایسه کاربران", icon: ChartIcon },
-  // { href: "/analytics", label: "نمودارها", icon: AnalyticsIcon },
-  // { href: "/view", label: "گزارش گیری", icon: ChartIcon },
+  { href: "/performsnce-per-role", label: "عمکرد نقش ها", icon: ChartSpline },
+  { href: "/roles-comparison", label: "مقایسه کارکرد نقش‌ها", icon: BriefcaseBusiness },
   // { href: "/settings", label: "تنظیمات سیستم", icon: SettingsIcon },
 ];
 

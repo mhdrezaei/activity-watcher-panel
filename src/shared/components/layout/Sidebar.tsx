@@ -7,7 +7,7 @@ import { ConfirmLogoutModal } from "@/shared/components/modals/ConfirmLogoutModa
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
-import { LogOut, ChartSpline } from "lucide-react";
+import { LogOut, ChartSpline, BriefcaseBusiness } from "lucide-react";
 
 import {
   DashboardIcon,
@@ -20,7 +20,7 @@ import { useThemeStore } from "@/store/theme.store";
 type SidebarItem = {
   href: string;
   label: string;
-  icon: React.ComponentType<{ active?: boolean; color?: string }>;
+  icon: React.ComponentType<any>;
 };
 
 const MENU_ITEMS: SidebarItem[] = [
@@ -28,7 +28,7 @@ const MENU_ITEMS: SidebarItem[] = [
   { href: "/users-management", label: "مدیریت کاربران", icon: UsersIcon },
   { href: "/compare-dashboard", label: "مقایسه کاربران", icon: ChartIcon },
   { href: "/performsnce-per-role", label: "عمکرد نقش ها", icon: ChartSpline },
-  // { href: "/settings", label: "تنظیمات سیستم", icon: SettingsIcon },
+  { href: "/roles-comparison", label: "مقایسه کارکرد نقش‌ها", icon: BriefcaseBusiness },
 ];
 
 export function Sidebar() {
