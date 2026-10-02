@@ -29,7 +29,7 @@ export function DevicePerformanceSection() {
   const chartOption = useMemo(() => mapDevicePerformanceToChart(data), [data]);
 
   return (
-    <div className="w-full p-4 bg-accent rounded-xl border border-border shadow-sm mt-6">
+    <div className="w-full min-w-0 overflow-hidden p-4 bg-accent rounded-xl border border-border shadow-sm mt-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-border pb-4 mb-4">
         <h3 className="text-base font-bold text-card-foreground">
           روند عملکرد زمانی بر اساس نقش و دستگاه
