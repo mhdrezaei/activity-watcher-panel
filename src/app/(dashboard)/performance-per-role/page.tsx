@@ -1,4 +1,4 @@
-import { DevicePerformanceSection } from "@/features/performsnce-per-role/components/DevicePerformance/DevicePerformanceSection";
+import { DevicePerformanceSection } from "@/features/performance-per-role/components/DevicePerformance/DevicePerformanceSection";
 import React from "react";
 
 export default function PerformancePerRolePage() {

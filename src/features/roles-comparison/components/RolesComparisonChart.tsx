@@ -1,7 +1,7 @@
 "use client";
 
 import ReactECharts from "echarts-for-react";
-import { WorksPerRoleResponse } from "../../types";
+import { WorksPerRoleResponse } from "../types";
 import { useThemeStore } from "@/store/theme.store";
 import { Users } from "lucide-react";
 import dayjs from "@/lib/utils/dayjsSetup";

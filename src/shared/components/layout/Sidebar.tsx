@@ -25,7 +25,7 @@ const MENU_ITEMS: SidebarItem[] = [
   { href: "/dashboard", label: "پیشخوان", icon: LayoutDashboard },
   { href: "/users-management", label: "مدیریت کاربران", icon: Users },
   { href: "/compare-dashboard", label: "مقایسه کاربران", icon: LineChart },
-  { href: "/performsnce-per-role", label: "عمکرد نقش ها", icon: ChartSpline },
+  { href: "/performance-per-role", label: "عملکرد نقش ها", icon: ChartSpline },
   { href: "/roles-comparison", label: "مقایسه کارکرد نقش‌ها", icon: BriefcaseBusiness },
 ];
 
