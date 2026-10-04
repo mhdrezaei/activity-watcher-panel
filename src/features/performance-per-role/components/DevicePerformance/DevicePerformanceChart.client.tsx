@@ -85,6 +85,15 @@ export default function DevicePerformanceChartClient({
             color: axisTextColor,
           },
         },
+        series: Array.isArray(option.series) 
+          ? option.series.map((s: any) => ({
+              ...s,
+              endLabel: s.endLabel ? {
+                ...s.endLabel,
+                color: isDark ? "#e5e7eb" : "inherit"
+              } : undefined
+            }))
+          : option.series,
       };
 
       chartInstance.current?.setOption(themedOption, { notMerge: true });
